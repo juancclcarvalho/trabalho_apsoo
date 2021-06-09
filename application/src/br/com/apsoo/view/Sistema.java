@@ -18,8 +18,8 @@ public class Sistema extends javax.swing.JFrame {
     public Sistema() {
         initComponents();
         con.conectar();
-        String sql = "select * from produtos";
-        populaTabela(sql);
+        
+        populaTabela();
         
         lblData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         lblHora.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
@@ -551,9 +551,9 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_tblProdutosMouseClicked
 
    
-     private void populaTabela(String sql) {
+     private void populaTabela() {
         // com o parâmetro vai realizar uma pesquisa
-        con.pesquisar(sql);
+        
         //vamos controlar os erros 
         try {
             //definimos tamanho da largura das colunas
@@ -561,19 +561,19 @@ public class Sistema extends javax.swing.JFrame {
             tblProdutos.getColumnModel().getColumn(1).setPreferredWidth(80);
             tblProdutos.getColumnModel().getColumn(2).setPreferredWidth(30);
 
-
             //vamos criar um objeto da classe DefaultTableModel para tratar as configurações
             DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
-
             //vamos seguir definir o número inicial de linhas, setando para 0
             modelo.setNumRows(0);
             //agora podemos preencher a tabela com o número de linhas que estiver no resultset (rs)
-            while (con.rs.next()) {
-                modelo.addRow(new Object[]{
-                    con.rs.getString("codproduto"),
-                    con.rs.getString("descricao"),
-                    con.rs.getString("preco"),});
-            }
+            con.pesquisar("selec * from produtos where codproduto = 2");
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
+            con.pesquisar("selec * from produtos where codproduto = 3");
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
+            con.pesquisar("selec * from produtos where codproduto = 4");
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
+            con.pesquisar("selec * from produtos where codproduto = 5");
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
 
         } catch (SQLException erro) {
             System.out.println("Erro SQL da tabela: " + erro);
