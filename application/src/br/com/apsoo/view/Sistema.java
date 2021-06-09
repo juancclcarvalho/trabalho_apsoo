@@ -6,10 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import br.com.apsoo.dto.Venda;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -98,6 +94,7 @@ public class Sistema extends javax.swing.JFrame {
         txtValorPago = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        calcularTroco = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -449,6 +446,7 @@ public class Sistema extends javax.swing.JFrame {
         painelBase.add(painelVenda, "card2");
 
         painelPagamento.setBackground(new java.awt.Color(46, 88, 89));
+        painelPagamento.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         comboFormas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---------------------", "Cartão de Crédito", "Cartão de Débito", "Dinheiro" }));
         comboFormas.addActionListener(new java.awt.event.ActionListener() {
@@ -456,6 +454,7 @@ public class Sistema extends javax.swing.JFrame {
                 comboFormasActionPerformed(evt);
             }
         });
+        painelPagamento.add(comboFormas, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 179, 309, -1));
 
         btnGravar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/apsoo/imagens/gravar_registro.gif"))); // NOI18N
         btnGravar1.setText("CONFIRMAR");
@@ -464,6 +463,7 @@ public class Sistema extends javax.swing.JFrame {
                 btnGravar1ActionPerformed(evt);
             }
         });
+        painelPagamento.add(btnGravar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(404, 477, -1, -1));
 
         btnExcluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/apsoo/imagens/delete.gif"))); // NOI18N
         btnExcluir1.setText("CANCELAR");
@@ -472,16 +472,23 @@ public class Sistema extends javax.swing.JFrame {
                 btnExcluir1ActionPerformed(evt);
             }
         });
+        painelPagamento.add(btnExcluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(273, 477, -1, -1));
+        painelPagamento.add(labeTxtlTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 344, 37, 19));
+        painelPagamento.add(labelTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 344, 102, 23));
 
         jLabel6.setText("Desconto: R$");
+        painelPagamento.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 373, -1, -1));
 
         labelDescontoPagamento.setText("0.00");
+        painelPagamento.add(labelDescontoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 373, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Total: R$");
+        painelPagamento.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 393, -1, -1));
 
         labelTotalPagamento.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labelTotalPagamento.setText("0.00");
+        painelPagamento.add(labelTotalPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 393, -1, -1));
 
         txtValorPago.setEnabled(false);
         txtValorPago.addActionListener(new java.awt.event.ActionListener() {
@@ -489,78 +496,21 @@ public class Sistema extends javax.swing.JFrame {
                 txtValorPagoActionPerformed(evt);
             }
         });
+        painelPagamento.add(txtValorPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 179, 96, -1));
 
         jLabel1.setText("Valor Pago");
+        painelPagamento.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 158, -1, -1));
 
         jLabel3.setText("Forma de Pagamento");
+        painelPagamento.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(77, 158, -1, -1));
 
-        javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
-        painelPagamento.setLayout(painelPagamentoLayout);
-        painelPagamentoLayout.setHorizontalGroup(
-            painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelTotalPagamento))
-                    .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelDescontoPagamento))
-                    .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addComponent(labeTxtlTroco)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelTroco))
-                    .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelPagamentoLayout.createSequentialGroup()
-                                    .addGap(196, 196, 196)
-                                    .addComponent(btnExcluir1))
-                                .addComponent(comboFormas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel3))
-                        .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnGravar1)))))
-                .addContainerGap(102, Short.MAX_VALUE))
-        );
-        painelPagamentoLayout.setVerticalGroup(
-            painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                .addContainerGap(180, Short.MAX_VALUE)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(147, 147, 147)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labeTxtlTroco)
-                    .addComponent(labelTroco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(labelDescontoPagamento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(labelTotalPagamento))
-                .addGap(55, 55, 55)
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGravar1)
-                    .addComponent(btnExcluir1))
-                .addGap(90, 90, 90))
-        );
+        calcularTroco.setText("CALCULAR TROCO");
+        calcularTroco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcularTrocoMouseClicked(evt);
+            }
+        });
+        painelPagamento.add(calcularTroco, new org.netbeans.lib.awtextra.AbsoluteConstraints(543, 178, -1, -1));
 
         painelBase.add(painelPagamento, "card2");
 
@@ -703,8 +653,38 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
+    private void btnGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGravarMouseClicked
+      
+    }//GEN-LAST:event_btnGravarMouseClicked
+
+    private void calcularTrocoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularTrocoMouseClicked
+
+        if(!"".equals(txtValorPago.getText())) {
+            double totalDouble = Double.parseDouble(labelTotalPagamento.getText());
+            double dinheiroDouble = Double.parseDouble(txtValorPago.getText());
+            double troco = dinheiroDouble - totalDouble ;
+            if(troco >= 0) {
+                String trocoString = Double.toString(troco);
+                if(trocoString.length() > 8) {
+                    labelTroco.setText("R$ " + trocoString.substring(0,7));
+                } else {
+                    labelTroco.setText("R$ " + trocoString);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_calcularTrocoMouseClicked
+
+    private void txtValorPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorPagoActionPerformed
+
+    private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluir1ActionPerformed
+
     private void btnGravar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravar1ActionPerformed
-        /*con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total)"
+        con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total)"
             + " values('" + lblNVenda.getText() + "', '" + lblData.getText() + "', '" + cpfcliente.getText() + "' , '" + 1111 + "' ,"
             + " '" + valorVenda.getText() + "' ,  '" + desconto.getText() + "' , '" + total.getText() + "')");
         try {
@@ -713,30 +693,29 @@ public class Sistema extends javax.swing.JFrame {
         } catch (SQLException erroSQL) {
             System.out.println("Erro SQL : " + erroSQL);
 
-        }*/
+        }
     }//GEN-LAST:event_btnGravar1ActionPerformed
-
-    private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExcluir1ActionPerformed
-
-    private void txtValorPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorPagoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtValorPagoActionPerformed
 
     private void comboFormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFormasActionPerformed
         JComboBox comboBox = (JComboBox) evt.getSource();
 
         Object selected = comboBox.getSelectedItem();
-        if(selected.toString().equals("Dinheiro"))
+        if(selected.toString().equals("Dinheiro")) {
             txtValorPago.setEnabled(true);
-    
+            labeTxtlTroco.setText("Troco:");
+            labeTxtlTroco.setVisible(true);
+            labelTroco.setText("R$ 0.00");
+            labelTroco.setVisible(true);
+        } else {
+            txtValorPago.setEnabled(false);
+            txtValorPago.setText("");
+            labeTxtlTroco.setVisible(false);
+            labelTroco.setVisible(false);
+        }
 
+        labelDescontoPagamento.setText(desconto.getText());
+        labelTotalPagamento.setText(total.getText());
     }//GEN-LAST:event_comboFormasActionPerformed
-
-    private void btnGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGravarMouseClicked
-      
-    }//GEN-LAST:event_btnGravarMouseClicked
 
    
      private void populaTabela() {
@@ -859,6 +838,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnProcuraOrcamento1;
     private javax.swing.JButton btnVenda;
     private javax.swing.JButton btnVendedorCliente;
+    private javax.swing.JButton calcularTroco;
     private javax.swing.JLabel clienteTxtLabel;
     private javax.swing.JLabel codVendTxtLabel;
     private javax.swing.JTextField codvendedor;
