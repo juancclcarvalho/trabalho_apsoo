@@ -615,6 +615,8 @@ public class Sistema extends javax.swing.JFrame {
         
         int qtde = 9;
         double val = 0.0;
+        double desconto_val = 0.0;
+        double total_val = 0.0;
         
         //vamos controlar os erros 
         try {
@@ -647,6 +649,27 @@ public class Sistema extends javax.swing.JFrame {
             
             valorVenda.setText(Double.toString(val));
             qtdItens.setText(Integer.toString(qtde));
+            
+            if(val > 200.0){
+                desconto_val = 0.02*val;
+                desconto.setText(Double.toString(desconto_val));
+                total_val = val - desconto_val;
+                total.setText(Double.toString(total_val));
+            }
+            else if(val > 500){
+                desconto_val = 0.05*val;
+                desconto.setText(Double.toString(desconto_val));
+                total_val = val - desconto_val;
+                total.setText(Double.toString(total_val));
+
+            }
+            else{
+                desconto.setText(Double.toString(desconto_val));
+                total_val = val - desconto_val;
+                total.setText(Double.toString(total_val));
+            }
+            
+
         } catch (SQLException erro) {
             System.out.println("Erro SQL da tabela: " + erro);
         }
