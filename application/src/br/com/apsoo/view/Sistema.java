@@ -684,15 +684,32 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluir1ActionPerformed
 
     private void btnGravar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravar1ActionPerformed
-        con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total)"
-            + " values('" + lblNVenda.getText() + "', '" + lblData.getText() + "', '" + cpfcliente.getText() + "' , '" + 1111 + "' ,"
-            + " '" + valorVenda.getText() + "' ,  '" + desconto.getText() + "' , '" + total.getText() + "')");
+        String cpfvendedor = "";
+        String sqli = "select v.cpf from vendedor as v where v.codacesso = '" + codvendedor.getText() + "'";
+        con.pesquisar(sqli);
         try {
-            con.pesquisar("select * from venda");
-            con.rs.first();
+             con.rs.next();
+             cpfvendedor = con.rs.getString("cpf");
         } catch (SQLException erroSQL) {
-            System.out.println("Erro SQL : " + erroSQL);
+            System.out.println("Erro de conexão com o banco: " + erroSQL);
+        }
+        
+        if (!"".equals(cpfvendedor)) {
+            con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total, formaPgto)"
+            + " values('" + lblNVenda.getText() + "', '" + lblData.getText() + "', '" + cpfcliente.getText() + "' , '" + cpfvendedor + "' ,"
+            + " '" + valorVenda.getText() + "' ,  '" + desconto.getText() + "' , '" + total.getText() + "' , '" + comboFormas.getSelectedItem().toString() + "')");
+            try {
+                con.pesquisar("select * from venda");
+                con.rs.first();
+            } catch (SQLException erroSQL) {
+                System.out.println("Erro SQL : " + erroSQL);
 
+            }
+            
+            painelBase.removeAll();
+            painelBase.add(painelBase);
+            painelBase.repaint();
+            painelBase.revalidate();
         }
     }//GEN-LAST:event_btnGravar1ActionPerformed
 
