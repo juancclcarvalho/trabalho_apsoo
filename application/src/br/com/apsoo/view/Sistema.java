@@ -7,7 +7,11 @@ import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import br.com.apsoo.dto.Venda;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+import javax.swing.JOptionPane;
 
 
 
@@ -44,9 +48,9 @@ public class Sistema extends javax.swing.JFrame {
         Estoque = new javax.swing.JButton();
         Relatorio = new javax.swing.JButton();
         Admin = new javax.swing.JButton();
-        painel1 = new javax.swing.JPanel();
-        painel4 = new javax.swing.JPanel();
-        painel2 = new javax.swing.JPanel();
+        painelBase = new javax.swing.JPanel();
+        painelInicial = new javax.swing.JPanel();
+        painelVendaOrcamento = new javax.swing.JPanel();
         btnVenda = new javax.swing.JButton();
         btnOrcamento = new javax.swing.JButton();
         painelVenda = new javax.swing.JPanel();
@@ -80,6 +84,8 @@ public class Sistema extends javax.swing.JFrame {
         total = new javax.swing.JLabel();
         btnVendedorCliente = new javax.swing.JButton();
         btnProcuraOrcamento1 = new javax.swing.JButton();
+        painelPagamento = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -154,26 +160,26 @@ public class Sistema extends javax.swing.JFrame {
         barraLateral.add(Admin);
         Admin.setBounds(0, 480, 120, 120);
 
-        painel1.setBackground(new java.awt.Color(46, 88, 89));
-        painel1.setPreferredSize(new java.awt.Dimension(680, 600));
-        painel1.setLayout(new java.awt.CardLayout());
+        painelBase.setBackground(new java.awt.Color(46, 88, 89));
+        painelBase.setPreferredSize(new java.awt.Dimension(680, 600));
+        painelBase.setLayout(new java.awt.CardLayout());
 
-        painel4.setBackground(new java.awt.Color(0, 102, 102));
+        painelInicial.setBackground(new java.awt.Color(46, 88, 89));
 
-        javax.swing.GroupLayout painel4Layout = new javax.swing.GroupLayout(painel4);
-        painel4.setLayout(painel4Layout);
-        painel4Layout.setHorizontalGroup(
-            painel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout painelInicialLayout = new javax.swing.GroupLayout(painelInicial);
+        painelInicial.setLayout(painelInicialLayout);
+        painelInicialLayout.setHorizontalGroup(
+            painelInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 627, Short.MAX_VALUE)
         );
-        painel4Layout.setVerticalGroup(
-            painel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        painelInicialLayout.setVerticalGroup(
+            painelInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 600, Short.MAX_VALUE)
         );
 
-        painel1.add(painel4, "card2");
+        painelBase.add(painelInicial, "card2");
 
-        painel2.setBackground(new java.awt.Color(46, 88, 89));
+        painelVendaOrcamento.setBackground(new java.awt.Color(46, 88, 89));
 
         btnVenda.setBackground(new java.awt.Color(4, 55, 56));
         btnVenda.setText("REALIZAR VENDA");
@@ -193,28 +199,28 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout painel2Layout = new javax.swing.GroupLayout(painel2);
-        painel2.setLayout(painel2Layout);
-        painel2Layout.setHorizontalGroup(
-            painel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelVendaOrcamentoLayout = new javax.swing.GroupLayout(painelVendaOrcamento);
+        painelVendaOrcamento.setLayout(painelVendaOrcamentoLayout);
+        painelVendaOrcamentoLayout.setHorizontalGroup(
+            painelVendaOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelVendaOrcamentoLayout.createSequentialGroup()
                 .addContainerGap(88, Short.MAX_VALUE)
                 .addComponent(btnVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(82, 82, 82)
                 .addComponent(btnOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(125, 125, 125))
         );
-        painel2Layout.setVerticalGroup(
-            painel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painel2Layout.createSequentialGroup()
+        painelVendaOrcamentoLayout.setVerticalGroup(
+            painelVendaOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelVendaOrcamentoLayout.createSequentialGroup()
                 .addGap(209, 209, 209)
-                .addGroup(painel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelVendaOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(228, Short.MAX_VALUE))
         );
 
-        painel1.add(painel2, "card2");
+        painelBase.add(painelVendaOrcamento, "card2");
 
         painelVenda.setBackground(new java.awt.Color(46, 88, 89));
         painelVenda.setPreferredSize(new java.awt.Dimension(680, 600));
@@ -321,6 +327,11 @@ public class Sistema extends javax.swing.JFrame {
                 btnAdicionarMouseClicked(evt);
             }
         });
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -418,7 +429,39 @@ public class Sistema extends javax.swing.JFrame {
         btnProcuraOrcamento1.setText("BUSCAR ORÇAMENTO");
         painelVenda.add(btnProcuraOrcamento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 170, -1));
 
-        painel1.add(painelVenda, "card2");
+        painelBase.add(painelVenda, "card2");
+
+        painelPagamento.setBackground(new java.awt.Color(46, 88, 89));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 478, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 179, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
+        painelPagamento.setLayout(painelPagamentoLayout);
+        painelPagamentoLayout.setHorizontalGroup(
+            painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        painelPagamentoLayout.setVerticalGroup(
+            painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
+        );
+
+        painelBase.add(painelPagamento, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -427,30 +470,30 @@ public class Sistema extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(barraLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(painel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(barraLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(painel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendaMouseClicked
-        painel1.removeAll();
-        painel1.add(painelVenda);
-        painel1.repaint();
-        painel1.revalidate();
+        painelBase.removeAll();
+        painelBase.add(painelVenda);
+        painelBase.repaint();
+        painelBase.revalidate();
     }//GEN-LAST:event_btnVendaMouseClicked
 
     private void btnOrcamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrcamentoMouseClicked
-        painel1.removeAll();
+        painelBase.removeAll();
         //painel1.add(painelOrcamento);
-        painel1.repaint();
-        painel1.revalidate();
+        painelBase.repaint();
+        painelBase.revalidate();
     }//GEN-LAST:event_btnOrcamentoMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -458,10 +501,13 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void VendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VendaMouseClicked
-        painel1.removeAll();
-        painel1.add(painel2);
-        painel1.repaint();
-        painel1.revalidate();
+        painelBase.removeAll();
+        String codigoVendedor = JOptionPane.showInputDialog(painelBase,
+                        "Inserir código do funcionário para validar a venda", null);
+        System.out.println(codigoVendedor);
+        painelBase.add(painelVendaOrcamento);
+        painelBase.repaint();
+        painelBase.revalidate();
     }//GEN-LAST:event_VendaMouseClicked
 
     private void RetiradaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RetiradaMouseClicked
@@ -559,9 +605,16 @@ public class Sistema extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tblProdutosMouseClicked
 
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
    
      private void populaTabela() {
         // com o parâmetro vai realizar uma pesquisa
+        
+        int qtde = 9;
+        double val = 0.0;
         
         //vamos controlar os erros 
         try {
@@ -575,15 +628,25 @@ public class Sistema extends javax.swing.JFrame {
             //vamos seguir definir o número inicial de linhas, setando para 0
             modelo.setNumRows(0);
             //agora podemos preencher a tabela com o número de linhas que estiver no resultset (rs)
-            con.pesquisar("selec * from produtos where codproduto = 2");
-            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
-            con.pesquisar("selec * from produtos where codproduto = 3");
-            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
-            con.pesquisar("selec * from produtos where codproduto = 4");
-            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
-            con.pesquisar("selec * from produtos where codproduto = 5");
-            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), });
-
+            con.pesquisar("select * from produtos where codproduto = 2");
+            con.rs.next();
+            val += Double.parseDouble(con.rs.getString("preco"));
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), 1});
+            con.pesquisar("select * from produtos where codproduto = 3");
+            con.rs.next();
+            val += Double.parseDouble(con.rs.getString("preco")) * 5;
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), 5});
+            con.pesquisar("select * from produtos where codproduto = 4");
+            con.rs.next();
+            val += Double.parseDouble(con.rs.getString("preco")) * 2;
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), 2});
+            con.pesquisar("select * from produtos where codproduto = 5");
+            con.rs.next();
+            val += Double.parseDouble(con.rs.getString("preco"));
+            modelo.addRow(new Object[]{con.rs.getString("codproduto"), con.rs.getString("descricao"), con.rs.getString("preco"), 1});
+            
+            valorVenda.setText(Double.toString(val));
+            qtdItens.setText(Integer.toString(qtde));
         } catch (SQLException erro) {
             System.out.println("Erro SQL da tabela: " + erro);
         }
@@ -651,6 +714,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblHora;
@@ -661,10 +725,11 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel nomeVendedor;
     private javax.swing.JTextField orcamento;
     private javax.swing.JLabel orcamentoTxtLabel;
-    private javax.swing.JPanel painel1;
-    private javax.swing.JPanel painel2;
-    private javax.swing.JPanel painel4;
+    private javax.swing.JPanel painelBase;
+    private javax.swing.JPanel painelInicial;
+    private javax.swing.JPanel painelPagamento;
     private javax.swing.JPanel painelVenda;
+    private javax.swing.JPanel painelVendaOrcamento;
     private javax.swing.JLabel qtdItens;
     private javax.swing.JLabel subtotalLista;
     private javax.swing.JTable tblProdutos;
