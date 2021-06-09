@@ -23,11 +23,10 @@ public class Sistema extends javax.swing.JFrame {
         
         lblData.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         lblHora.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
-        int hashCode = lblNVenda.hashCode();
-        lblNVenda.setText(Integer.toString(hashCode));
-      
-        //Venda venda = new Venda();
-        //venda.calculaDesconto();
+        
+        UUID uuid = UUID.randomUUID();
+        String myRandom = uuid.toString();
+        lblNVenda.setText(myRandom.substring(0,10));
     }
 
     /**
@@ -524,25 +523,35 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVendedorClienteMouseClicked
 
     private void btnAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarMouseClicked
-      String codProduto = tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0).toString();
-      String preco = tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 2).toString();
-      Venda objetovenda = new Venda();
-      //Locale brasil = new Locale ("pt", "BR");
-      
-      //valorVenda.setText(String.format(Locale.US, "%,.2f", objetovenda.calculaValorVenda(valorVenda.getText(), preco, 1)));
-      valorVenda.setText(objetovenda.calculaValorVenda(valorVenda.getText(), preco, 1));
-      desconto.setText(objetovenda.calculaDesconto(valorVenda.getText()));
-      total.setText(objetovenda.calculaTotal(valorVenda.getText(), desconto.getText()));
-
-
-      
-      int qtd = Integer.parseInt(qtdItens.getText());
-      int qtdTotal = qtd + 1;
-      qtdItens.setText(Integer.toString(qtdTotal));
-      
-       //con.atualizar("insert into vendaProduto(codVenda, codProduto, quantidade, preco)"
-            //    + " values('" + lblNVenda.getText() + "', '" + codProduto + "' , '" + qtdItens.getText() + "' ,"
-          //      + " '" + preco + "')");
+        String codProduto = tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0).toString();
+        String preco = tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 2).toString();
+        Venda objetovenda = new Venda();
+        
+        if(objetovenda.calculaValorVenda(valorVenda.getText(), preco, 1).length() > 8) {
+            valorVenda.setText(objetovenda.calculaValorVenda(valorVenda.getText(), preco, 1).substring(0,7));
+        } else {
+            valorVenda.setText(objetovenda.calculaValorVenda(valorVenda.getText(), preco, 1));
+        }
+        
+        if(objetovenda.calculaDesconto(valorVenda.getText()).length() > 8) {
+            desconto.setText(objetovenda.calculaDesconto(valorVenda.getText()).substring(0,7));
+        } else {
+            desconto.setText(objetovenda.calculaDesconto(valorVenda.getText()));
+        }
+        
+        if(objetovenda.calculaTotal(valorVenda.getText(), desconto.getText()).length() > 8) {
+            total.setText(objetovenda.calculaTotal(valorVenda.getText(), desconto.getText()).substring(0,7));
+        } else {
+            total.setText(objetovenda.calculaTotal(valorVenda.getText(), desconto.getText()));
+        }
+        
+        int qtd = Integer.parseInt(qtdItens.getText());
+        int qtdTotal = qtd + 1;
+        qtdItens.setText(Integer.toString(qtdTotal));
+        
+         //con.atualizar("insert into vendaProduto(codVenda, codProduto, quantidade, preco)"
+              //    + " values('" + lblNVenda.getText() + "', '" + codProduto + "' , '" + qtdItens.getText() + "' ,"
+            //      + " '" + preco + "')");
       
     }//GEN-LAST:event_btnAdicionarMouseClicked
 
