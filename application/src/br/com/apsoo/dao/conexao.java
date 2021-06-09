@@ -27,7 +27,7 @@ public class conexao {
             //senha = JOptionPane.showInputDialog("Digite a senha de acesso");
             //vamos criar o código que vai estabelecer a conexão
             String usuario = "postgres";
-            String senha = "";
+            String senha = "aaaaa";
             con = DriverManager.getConnection(url, usuario, senha); //123
             //se funcionar, irá aparecer a mensagem:
             //JOptionPane.showMessageDialog(null, "Conectou!");

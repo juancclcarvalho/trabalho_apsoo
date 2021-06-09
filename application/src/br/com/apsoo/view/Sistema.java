@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 
@@ -85,7 +86,18 @@ public class Sistema extends javax.swing.JFrame {
         btnVendedorCliente = new javax.swing.JButton();
         btnProcuraOrcamento1 = new javax.swing.JButton();
         painelPagamento = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        comboFormas = new javax.swing.JComboBox<>();
+        btnGravar1 = new javax.swing.JButton();
+        btnExcluir1 = new javax.swing.JButton();
+        labeTxtlTroco = new javax.swing.JLabel();
+        labelTroco = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        labelDescontoPagamento = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        labelTotalPagamento = new javax.swing.JLabel();
+        txtValorPago = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -237,6 +249,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/apsoo/imagens/gravar_registro.gif"))); // NOI18N
         btnGravar.setText("CONFIRMAR");
+        btnGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGravarMouseClicked(evt);
+            }
+        });
         btnGravar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGravarActionPerformed(evt);
@@ -433,32 +450,116 @@ public class Sistema extends javax.swing.JFrame {
 
         painelPagamento.setBackground(new java.awt.Color(46, 88, 89));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 478, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 179, Short.MAX_VALUE)
-        );
+        comboFormas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---------------------", "Cartão de Crédito", "Cartão de Débito", "Dinheiro" }));
+        comboFormas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboFormasActionPerformed(evt);
+            }
+        });
+
+        btnGravar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/apsoo/imagens/gravar_registro.gif"))); // NOI18N
+        btnGravar1.setText("CONFIRMAR");
+        btnGravar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravar1ActionPerformed(evt);
+            }
+        });
+
+        btnExcluir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/apsoo/imagens/delete.gif"))); // NOI18N
+        btnExcluir1.setText("CANCELAR");
+        btnExcluir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluir1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Desconto: R$");
+
+        labelDescontoPagamento.setText("0.00");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel8.setText("Total: R$");
+
+        labelTotalPagamento.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        labelTotalPagamento.setText("0.00");
+
+        txtValorPago.setEnabled(false);
+        txtValorPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorPagoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Valor Pago");
+
+        jLabel3.setText("Forma de Pagamento");
 
         javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
         painelPagamento.setLayout(painelPagamentoLayout);
         painelPagamentoLayout.setHorizontalGroup(
             painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPagamentoLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGap(77, 77, 77)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelPagamentoLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelTotalPagamento))
+                    .addGroup(painelPagamentoLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelDescontoPagamento))
+                    .addGroup(painelPagamentoLayout.createSequentialGroup()
+                        .addComponent(labeTxtlTroco)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelTroco))
+                    .addGroup(painelPagamentoLayout.createSequentialGroup()
+                        .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelPagamentoLayout.createSequentialGroup()
+                                    .addGap(196, 196, 196)
+                                    .addComponent(btnExcluir1))
+                                .addComponent(comboFormas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3))
+                        .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnGravar1)))))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         painelPagamentoLayout.setVerticalGroup(
             painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPagamentoLayout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addContainerGap(180, Short.MAX_VALUE)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboFormas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(147, 147, 147)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labeTxtlTroco)
+                    .addComponent(labelTroco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(labelDescontoPagamento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(labelTotalPagamento))
+                .addGap(55, 55, 55)
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGravar1)
+                    .addComponent(btnExcluir1))
+                .addGap(90, 90, 90))
         );
 
         painelBase.add(painelPagamento, "card2");
@@ -531,17 +632,10 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_codvendedorActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-            con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total)"
-                + " values('" + lblNVenda.getText() + "', '" + lblData.getText() + "', '" + cpfcliente.getText() + "' , '" + 1111 + "' ,"
-                + " '" + valorVenda.getText() + "' ,  '" + desconto.getText() + "' , '" + total.getText() + "')");
-            try {
-                con.pesquisar("select * from venda");
-                con.rs.first();
-            } catch (SQLException erroSQL) {
-                System.out.println("Erro SQL : " + erroSQL);
-
-            }
-          System.exit(0);
+        painelBase.removeAll();
+        painelBase.add(painelPagamento);
+        painelBase.repaint();
+        painelBase.revalidate();
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnVendedorClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendedorClienteMouseClicked
@@ -608,6 +702,41 @@ public class Sistema extends javax.swing.JFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnGravar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravar1ActionPerformed
+        /*con.atualizar("insert into venda(codVenda, dataVenda, cpfcliente, cpfvendedor, valorVenda, desconto, total)"
+            + " values('" + lblNVenda.getText() + "', '" + lblData.getText() + "', '" + cpfcliente.getText() + "' , '" + 1111 + "' ,"
+            + " '" + valorVenda.getText() + "' ,  '" + desconto.getText() + "' , '" + total.getText() + "')");
+        try {
+            con.pesquisar("select * from venda");
+            con.rs.first();
+        } catch (SQLException erroSQL) {
+            System.out.println("Erro SQL : " + erroSQL);
+
+        }*/
+    }//GEN-LAST:event_btnGravar1ActionPerformed
+
+    private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluir1ActionPerformed
+
+    private void txtValorPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorPagoActionPerformed
+
+    private void comboFormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFormasActionPerformed
+        JComboBox comboBox = (JComboBox) evt.getSource();
+
+        Object selected = comboBox.getSelectedItem();
+        if(selected.toString().equals("Dinheiro"))
+            txtValorPago.setEnabled(true);
+    
+
+    }//GEN-LAST:event_comboFormasActionPerformed
+
+    private void btnGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGravarMouseClicked
+      
+    }//GEN-LAST:event_btnGravarMouseClicked
 
    
      private void populaTabela() {
@@ -723,7 +852,9 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JPanel barraLateral;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnExcluir1;
     private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnGravar1;
     private javax.swing.JButton btnOrcamento;
     private javax.swing.JButton btnProcuraOrcamento1;
     private javax.swing.JButton btnVenda;
@@ -731,14 +862,22 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel clienteTxtLabel;
     private javax.swing.JLabel codVendTxtLabel;
     private javax.swing.JTextField codvendedor;
+    private javax.swing.JComboBox<String> comboFormas;
     private javax.swing.JLabel cpfClienteTxtLabel;
     private javax.swing.JTextField cpfcliente;
     private javax.swing.JLabel desconto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labeTxtlTroco;
+    private javax.swing.JLabel labelDescontoPagamento;
+    private javax.swing.JLabel labelTotalPagamento;
+    private javax.swing.JLabel labelTroco;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblNVenda;
@@ -757,6 +896,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel subtotalLista;
     private javax.swing.JTable tblProdutos;
     private javax.swing.JLabel total;
+    private javax.swing.JTextField txtValorPago;
     private javax.swing.JLabel valorVenda;
     private javax.swing.JLabel vendedorTxtLabel;
     // End of variables declaration//GEN-END:variables
