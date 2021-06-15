@@ -1,7 +1,8 @@
 
 package br.com.apsoo.dto;
 
-
+/// abstração de um produto da venda com uma certa quantidade e um valor
+/// uma venda possui varios itens e cada item é um produto e uma quantidade
 public class ItemVenda {
     private Produto _item;
     private int _qtde_item;
