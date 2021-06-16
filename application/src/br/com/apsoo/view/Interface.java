@@ -13,10 +13,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimerTask;
 import javax.swing.table.DefaultTableModel;
-import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
 public class Interface extends javax.swing.JFrame {
     private String operacao;
+    
+    // atributos que devem ir para a controladora
     private Database bd;
     private DefaultTableModel model;
     
@@ -26,6 +27,9 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         this.bd = new Database();
+        
+        
+        ///pode ir paraa a controladora
         java.util.Timer timer = new java.util.Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -1063,6 +1067,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendaMouseClicked
         
+        //pode ir para a controladora
         java.util.Timer timer = new java.util.Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -1075,13 +1080,12 @@ public class Interface extends javax.swing.JFrame {
         
         String cod_validar = JOptionPane.showInputDialog("DIGITE O CÓDIGO DE FUNCIONÁRIO PARA VALIDAR A OPERAÇÃO!");
         
-        // passa o codigo para a controladora validar
+        
+        // passar o codigo para a controladora validar
         List retorno_bd = bd.buscaTabela("func_cod_acesso", "tb_funcionario", "", "");
         
         //chamar metodo da controladora como condição do IF
         if(cod_validar != null && retorno_bd.contains(cod_validar)){
-            // passar o codigo para a controladora trazer as informações necessárias
-            System.out.println(bd.buscaTabela("func_nome, func_cpf", "tb_funcionario", "", "where func_cod_acesso::integer=%s".formatted(cod_validar.toString())).get(0));
             
             painel_base.removeAll();
             painel_base.add(jPanelMenuVenda);
@@ -1100,6 +1104,8 @@ public class Interface extends javax.swing.JFrame {
         painel_base.revalidate();
         this.operacao = "Venda";
         
+        
+        //pode ir para a conttroladora;
         java.util.Timer timer = new java.util.Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -1152,6 +1158,8 @@ public class Interface extends javax.swing.JFrame {
         painel_base.repaint();
         painel_base.revalidate();
         
+        
+        //// acao da controladora, deve buscar do banco e popular a tabela
         List res = bd.buscaTabela(
                 "p.prod_codigo, p.prod_descricao, m.marca_nome, p.prod_preco, p.prod_estoque", 
                 "tb_produto p", 
@@ -1167,6 +1175,7 @@ public class Interface extends javax.swing.JFrame {
             String[] ss = s.split(",");
             model.addRow(new Object[]{ss[0].strip(), ss[1].strip(), ss[2].strip(), Double.valueOf(ss[3].strip()), Integer.valueOf(ss[4].strip())});
         }
+        //// ate aqui
     }//GEN-LAST:event_btnAddItemMouseClicked
 
     private void btnAddItemOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddItemOrcMouseClicked
