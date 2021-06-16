@@ -21,6 +21,7 @@ public class Database {
         try {
             this.conn = DriverManager.getConnection(this.url);
             this.smt = this.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            System.out.println("DB Connected");
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }

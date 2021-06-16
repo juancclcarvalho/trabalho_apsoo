@@ -45,37 +45,61 @@ INSERT INTO public."tb_marca"(marca_nome, marca_sigla) VALUES ('Edifier', 'EDF')
 INSERT INTO public."tb_marca"(marca_nome, marca_sigla) VALUES ('Apple', 'APL');
 
 
+
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('A2172', 'iPhone 12', 'Preto', 7999, 'iPhone 12, 64GB, Preto', 100, 8);
+	VALUES ('A2172A', 'iPhone 12', 'Preto', 7999, 'iPhone 12 64GB Preto', 100, 8);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('A2172', 'iPhone 12', 'Roxo', 8499, 'iPhone 12, 128GB, Roxo', 100, 8);
+	VALUES ('A2172B', 'iPhone 12', 'Roxo', 8499, 'iPhone 12 128GB Roxo', 100, 8);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('A2341', 'iPhone 12 Pro', 'Grafite', 9999, 'iPhone 12 Pro, 256GB, Prateado', 100, 8);
+	VALUES ('A2341A', 'iPhone 12 Pro', 'Grafite', 9999, 'iPhone 12 Pro 256GB Prateado', 100, 8);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('A2342', 'iPhone 12 Pro Max', 'Dourado', 12999, 'iPhone 12 Pro Max, 512GB, Dourado', 100, 8);
+	VALUES ('A2341B', 'iPhone 12 Pro', 'Branco', 9999, 'iPhone 12 Pro 256GB Prateado', 100, 8);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('B08FF9QQ3B', 'Razer Basilisk', 'Preto, Colorido', 859.78, 'Mouse Razer Basilisk Ultimate, Preto, RGB 14 Leds, Pilha, Sem Fio', 50, 4);
+	VALUES ('A2342', 'iPhone 12 Pro Max', 'Dourado', 12999, 'iPhone 12 Pro Max 512GB Dourado', 100, 8);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B08FF9QQ3B', 'Razer Basilisk', 'Preto, Colorido', 859.78, 'Mouse Razer Basilisk Ultimate Preto RGB 14 Leds Pilha Sem Fio', 50, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
 	VALUES ('B07ZK6R8JF', 'Razer Kraken', 'Preto', 1182.34, 'Razer Kraken Ultimate RGB Fone de ouvido USB para jogos: THX 7.1 Spatial Surround Sound - Iluminação Chroma RGB', 120, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('B08BFF4C7J', 'Razer Huntsman', 'Preto, RGB', 984.30, 'Teclado Razer Huntsman Mini-Click Purple Switch, Preto', 80, 4);
+	VALUES ('B08BFF4C7J', 'Razer Huntsman', 'Preto, RGB', 984.30, 'Teclado Razer Huntsman Mini-Click Purple Switch Preto', 80, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
 	VALUES ('i3501m10pfmp', 'Dell Inspiron', 'Chumbo', 2599.0, 'Novo Inspiron 15 3000', 300, 1);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('v3500w3004wh', 'Dell Vostro', 'Preto', 4010.0, 'Notebook Vostro 15 3000', 200, 1);
+	VALUES ('v3500w3004wh', 'Dell Vostro', 'Preto', 4010.0, 'Notebook Vostro 15 3000 6GB RAM', 200, 1);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('cto01o3080mffbcc_p3', 'Dell OptiPlex', 'Cinza', 3821.0, 'OptiPlex Micro 3080 Com Mouse e Teclado', 1000, 1);
-
+	VALUES ('v3500w3008wh', 'Dell Vostro', 'Preto', 4690.0, 'Notebook Vostro 15 3000 10GB RAM', 200, 1);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('cto01o3080mffbcc_p3', 'Dell OptiPlex', 'Cinza', 3821.0, 'OptiPlex Micro 3080 Com Mouse e Teclado - Cinza', 1000, 1);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('cto01o3080mffbcc_p4', 'Dell OptiPlex', 'Branco', 3821.0, 'OptiPlex Micro 3080 Com Mouse e Teclado - Branco', 1000, 1);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B07Q3WJTQQ', 'Tws2', 'Preto', 260.0, 'Edifier Tws2 Fone Intra Auricular Bluetooth 5.0 - P E', 400, 7);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B07TDT6DFB', 'TWS 1', 'Branco', 239.90, 'Fone TWS1 Bluetooth 5.0 aptX e cVc EDIFIER - Branco', 200, 7);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B07TDT6DFC', 'TWS 1', 'Preto', 239.90, 'Fone TWS1 Bluetooth 5.0 aptX e cVc EDIFIER - Preto', 450, 7);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B07TDT6DFA', 'TWS 1', 'Azul', 239.90, 'Fone TWS1 Bluetooth 5.0 aptX e cVc EDIFIER - Azul', 450, 7);
+INSERT INTO public."tb_produto"(
+	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
+	VALUES ('B089NS9JW2', 'Mi Band', 'Preto', 198.50, 'Xiaomi Mi Band 5 - Versão Global', 80, 6);
 
 
 ------- ZERAR O BANCO

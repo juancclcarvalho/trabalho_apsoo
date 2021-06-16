@@ -7,15 +7,34 @@ package br.com.apsoo.view;
 
 import javax.swing.*;
 import br.com.apsoo.dao.Database;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TimerTask;
+import javax.swing.table.DefaultTableModel;
+import org.postgresql.ssl.DbKeyStoreSocketFactory;
 
 public class Interface extends javax.swing.JFrame {
     private String operacao;
+    private Database bd;
+    private DefaultTableModel model;
     
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
+        this.bd = new Database();
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                jLabel42.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+                jLabel38.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
+            }
+        }, 0, 1000);
+        
     }
 
     /**
@@ -30,9 +49,13 @@ public class Interface extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         painel_base = new javax.swing.JPanel();
         jPanelInicial = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
         jPanelMenuVenda = new javax.swing.JPanel();
         btnRealizarVenda = new javax.swing.JButton();
         btnRealizarOrçamento = new javax.swing.JButton();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
         jPanelVenda = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         inputNumOrcamento = new javax.swing.JTextField();
@@ -142,6 +165,34 @@ public class Interface extends javax.swing.JFrame {
 
         painel_base.setBackground(new java.awt.Color(204, 204, 255));
         painel_base.setLayout(new java.awt.CardLayout());
+
+        jLabel38.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel38.setText("01/01/99");
+
+        jLabel42.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel42.setText("12:12:12");
+
+        javax.swing.GroupLayout jPanelInicialLayout = new javax.swing.GroupLayout(jPanelInicial);
+        jPanelInicial.setLayout(jPanelInicialLayout);
+        jPanelInicialLayout.setHorizontalGroup(
+            jPanelInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInicialLayout.createSequentialGroup()
+                .addContainerGap(597, Short.MAX_VALUE)
+                .addGroup(jPanelInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel42))
+                .addGap(37, 37, 37))
+        );
+        jPanelInicialLayout.setVerticalGroup(
+            jPanelInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInicialLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42)
+                .addGap(504, 504, 504))
+        );
+
         painel_base.add(jPanelInicial, "card5");
 
         btnRealizarVenda.setText("Venda");
@@ -158,6 +209,12 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        jLabel36.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel36.setText("01/01/99");
+
+        jLabel37.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel37.setText("12:12:12");
+
         javax.swing.GroupLayout jPanelMenuVendaLayout = new javax.swing.GroupLayout(jPanelMenuVenda);
         jPanelMenuVenda.setLayout(jPanelMenuVendaLayout);
         jPanelMenuVendaLayout.setHorizontalGroup(
@@ -167,16 +224,26 @@ public class Interface extends javax.swing.JFrame {
                 .addComponent(btnRealizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(76, 76, 76)
                 .addComponent(btnRealizarOrçamento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMenuVendaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelMenuVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel36))
+                .addGap(34, 34, 34))
         );
         jPanelMenuVendaLayout.setVerticalGroup(
             jPanelMenuVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMenuVendaLayout.createSequentialGroup()
-                .addGap(167, 167, 167)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel37)
+                .addGap(105, 105, 105)
                 .addGroup(jPanelMenuVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRealizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRealizarOrçamento, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         painel_base.add(jPanelMenuVenda, "card2");
@@ -579,21 +646,13 @@ public class Interface extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOrcamentoLayout.createSequentialGroup()
                         .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNomeVendOrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanelOrcamentoLayout.createSequentialGroup()
-                                .addComponent(jLabel26)
-                                .addGap(159, 159, 159)
-                                .addComponent(jLabel27)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCodVendOrc)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel19)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOrcamentoLayout.createSequentialGroup()
                                 .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanelOrcamentoLayout.createSequentialGroup()
                                         .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel24)
                                             .addComponent(jLabel25))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                                         .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtTotalOrc, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtDescontoOrc))
@@ -609,7 +668,17 @@ public class Interface extends javax.swing.JFrame {
                                         .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtNomeClienteOrc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(27, 27, 27)))
+                                .addGap(27, 27, 27))
+                            .addGroup(jPanelOrcamentoLayout.createSequentialGroup()
+                                .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelOrcamentoLayout.createSequentialGroup()
+                                        .addComponent(jLabel26)
+                                        .addGap(159, 159, 159)
+                                        .addComponent(jLabel27)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCodVendOrc))
+                                    .addComponent(jLabel19))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelOrcamentoLayout.setVerticalGroup(
@@ -786,12 +855,13 @@ public class Interface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel31)
                 .addGap(2, 2, 2)
-                .addGroup(jPanelSelecaoProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinnerQtdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30)
+                .addGroup(jPanelSelecaoProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelSelecaoProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnCancelarSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnConfirmarSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnConfirmarSelecao, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelSelecaoProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinnerQtdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel30)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -993,11 +1063,26 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendaMouseClicked
         
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                jLabel37.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+                jLabel36.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
+            }
+        }, 0, 1000);
+        
+        
         String cod_validar = JOptionPane.showInputDialog("DIGITE O CÓDIGO DE FUNCIONÁRIO PARA VALIDAR A OPERAÇÃO!");
         
         // passa o codigo para a controladora validar
+        List retorno_bd = bd.buscaTabela("func_cod_acesso", "tb_funcionario", "", "");
         
-        if(cod_validar != null && cod_validar.equals("1234")){
+        //chamar metodo da controladora como condição do IF
+        if(cod_validar != null && retorno_bd.contains(cod_validar)){
+            // passar o codigo para a controladora trazer as informações necessárias
+            System.out.println(bd.buscaTabela("func_nome, func_cpf", "tb_funcionario", "", "where func_cod_acesso::integer=%s".formatted(cod_validar.toString())).get(0));
+            
             painel_base.removeAll();
             painel_base.add(jPanelMenuVenda);
             painel_base.repaint();
@@ -1014,6 +1099,16 @@ public class Interface extends javax.swing.JFrame {
         painel_base.repaint();
         painel_base.revalidate();
         this.operacao = "Venda";
+        
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                jLabel4.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
+                jLabel5.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
+            }
+        }, 0, 1000);
+        
     }//GEN-LAST:event_btnRealizarVendaMouseClicked
 
     private void btnRealizarOrçamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRealizarOrçamentoMouseClicked
@@ -1056,6 +1151,22 @@ public class Interface extends javax.swing.JFrame {
         painel_base.add(jPanelSelecaoProduto);
         painel_base.repaint();
         painel_base.revalidate();
+        
+        List res = bd.buscaTabela(
+                "p.prod_codigo, p.prod_descricao, m.marca_nome, p.prod_preco, p.prod_estoque", 
+                "tb_produto p", 
+                "inner join tb_marca m on p.marca_id = m.marca_id", 
+                "where p.prod_estoque > 0");
+        
+        model = (DefaultTableModel) jTableProdutosSelecao.getModel();
+        model.setNumRows(0);
+        
+        Iterator<String> it = res.iterator();
+        while(it.hasNext()){
+            String s = (String) it.next();
+            String[] ss = s.split(",");
+            model.addRow(new Object[]{ss[0].strip(), ss[1].strip(), ss[2].strip(), Double.valueOf(ss[3].strip()), Integer.valueOf(ss[4].strip())});
+        }
     }//GEN-LAST:event_btnAddItemMouseClicked
 
     private void btnAddItemOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddItemOrcMouseClicked
@@ -1188,10 +1299,14 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
