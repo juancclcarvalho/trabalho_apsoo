@@ -1,5 +1,5 @@
 
-package br.com.apsoo.util;
+package br.com.apsoo.enumutil;
 
 
 public enum Router {

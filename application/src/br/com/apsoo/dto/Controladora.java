@@ -2,7 +2,7 @@
 package br.com.apsoo.dto;
 
 import br.com.apsoo.dao.Database;
-import br.com.apsoo.util.Router;
+import br.com.apsoo.enumutil.Router;
 import javax.swing.JFrame;
 
 /*
@@ -31,11 +31,6 @@ public class Controladora {
     
     private Database bd;
     private JFrame grafica;
-    
-    
-    public static void main(String[] args) {
-        
-    }
 }
 
 
