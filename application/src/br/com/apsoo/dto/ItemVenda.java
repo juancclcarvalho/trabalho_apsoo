@@ -13,6 +13,9 @@ public class ItemVenda {
         this._qtde_item = _qtde_item;
         this._total_item = _total_item;
     }
+    
+    public ItemVenda(){
+    }
 
     public Produto getItem() {return _item;}
     public void setItem(Produto _item) {this._item = _item;}

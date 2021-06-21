@@ -17,6 +17,9 @@ public class Marca {
         this._sigla = _sigla;
     }
 
+    public Marca() {
+    }
+
     public int getId() {return _id;}
 
     public void setId(int _id) {this._id = _id;}

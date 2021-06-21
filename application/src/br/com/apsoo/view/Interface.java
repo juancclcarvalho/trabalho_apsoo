@@ -6,42 +6,26 @@
 package br.com.apsoo.view;
 
 import javax.swing.*;
-import br.com.apsoo.dao.Database;
+import br.com.apsoo.dto.Controladora;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimerTask;
 import javax.swing.table.DefaultTableModel;
 
 
 public class Interface extends javax.swing.JFrame {
-    private String operacao;
-    
-    // atributos que devem ir para a controladora
-    private Database bd;
+   
+    private Controladora controladora;
     private DefaultTableModel model;
-    
     /**
      * Creates new form Interface
      */
     public Interface() {
         initComponents();
-        this.bd = new Database();
         
-        
-        ///pode ir paraa a controladora
-        java.util.Timer timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                jLabel42.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
-                jLabel38.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
-            }
-        }, 0, 1000);
-        
+        this.controladora = new Controladora();
+        this.controladora.setTimerDataHora(jLabel38, jLabel42);
     }
 
     /**
@@ -1105,39 +1089,11 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendaMouseClicked
         
-        //pode ir para a controladora
-        java.util.Timer timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                jLabel37.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
-                jLabel36.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
-            }
-        }, 0, 1000);
-        
+        this.controladora.setTimerDataHora(jLabel36, jLabel37);
         
         String cod_validar = JOptionPane.showInputDialog("DIGITE O CÓDIGO DE FUNCIONÁRIO PARA VALIDAR A OPERAÇÃO!");
         
-        
-        // passar o codigo para a controladora validar
-        List retorno_bd = bd.buscaTabela("func_cod_acesso", "tb_funcionario", "", "");
-        
-        //chamar metodo da controladora como condição do IF
-        if(cod_validar != null && retorno_bd.contains(cod_validar)){
-            
-            // passar os dados do funcionario responsavel pela venda para a 
-            // controladora para associar a venda ao funcionario
-            
-            retorno_bd = bd.buscaTabela(
-                    "f.func_nome, fu.fu_nome, f.func_email", 
-                    "tb_funcionario f", 
-                    "inner join tb_funcao fu on fu.fu_id = f.fu_id", 
-                    "where f.func_cod_acesso = '%s'".formatted(cod_validar));
-        
-            String[] split = retorno_bd.get(0).toString().split(",");
-            
-            txtCodVendedor.setText(cod_validar.toString());
-            txtNomeVendedor.setText("%s - %s - %s".formatted(split[0], split[1], split[2]));
+        if(cod_validar != null && controladora.validarFuncionario(cod_validar)){
             
             painel_base.removeAll();
             painel_base.add(jPanelMenuVenda);
@@ -1154,25 +1110,22 @@ public class Interface extends javax.swing.JFrame {
         painel_base.add(jPanelVenda);
         painel_base.repaint();
         painel_base.revalidate();
-        this.operacao = "Venda";
         
-            
-        model = (DefaultTableModel) jTableProdutos.getModel();
-        model.setNumRows(0);
+        controladora.setOperacao("Venda");
         
+        txtCodVendedor.setText(controladora.getFuncionario().getCod_acesso());
+        txtNomeVendedor.setText("%s - %s - %s".formatted(
+                                        controladora.getFuncionario().getNome(),
+                                        controladora.getFuncionario().getFuncao().getNome(),
+                                        controladora.getFuncionario().getEmail()));
         
-        // seta timer data e hora
-        // pode ir para a conttroladora;
-        java.util.Timer timer = new java.util.Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                jLabel4.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()));
-                jLabel5.setText(new SimpleDateFormat("dd/MM/yy").format(new Date()));
-            }
-        }, 0, 1000);
+        controladora.configuraTabelaProdutos(jTableProdutos);        
         
-        // instanciar uma nova venda na controladora
+        this.controladora.setTimerDataHora(jLabel5, jLabel4);
+        
+        txtNumVenda.setText(controladora.iniciarVenda());
+        controladora.getVenda().setData_hora(controladora.getTimerDataHora(jLabel5, jLabel4));
+        
     }//GEN-LAST:event_btnRealizarVendaMouseClicked
 
     private void btnRealizarOrçamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRealizarOrçamentoMouseClicked
@@ -1180,17 +1133,20 @@ public class Interface extends javax.swing.JFrame {
         painel_base.add(jPanelOrcamento);
         painel_base.repaint();
         painel_base.revalidate();
-        this.operacao = "Orc";
+        this.controladora.setOperacao("Orc");
+        
+        //A IMPLEMENTAR
     }//GEN-LAST:event_btnRealizarOrçamentoMouseClicked
 
     private void btnCancelarVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarVendaMouseClicked
+        controladora.cancelarVenda();
+        
         JOptionPane.showConfirmDialog(null, "Cancelado com Sucesso!", "Cancelar Operação", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
         painel_base.removeAll();
         painel_base.add(jPanelInicial);
         painel_base.repaint();
         painel_base.revalidate();
-        
-        //destruir todos os objetos associados à venda na controladora
+        limpaTelaVenda();
     }//GEN-LAST:event_btnCancelarVendaMouseClicked
 
     private void btnCancelarOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarOrcMouseClicked
@@ -1199,14 +1155,14 @@ public class Interface extends javax.swing.JFrame {
         painel_base.add(jPanelInicial);
         painel_base.repaint();
         painel_base.revalidate();
+        
+        //A IMPLEMENTAR
     }//GEN-LAST:event_btnCancelarOrcMouseClicked
 
     private void btnCancelarSelecaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarSelecaoMouseClicked
-        
-        /// na controladora, destruir qualquer objeto aqui criado
-        
+       
         painel_base.removeAll();
-        if(this.operacao.equals("Venda")){
+        if(this.controladora.getOperacao().equals("Venda")){
             painel_base.add(jPanelVenda);
         }else{
             painel_base.add(jPanelOrcamento);
@@ -1223,23 +1179,8 @@ public class Interface extends javax.swing.JFrame {
         
         jSpinnerQtdProduto.setValue(1);
         
-        //// acao da controladora, deve buscar do banco e popular a tabela
-        List res = bd.buscaTabela(
-                "p.prod_codigo, p.prod_descricao, m.marca_nome, p.prod_preco, p.prod_estoque", 
-                "tb_produto p", 
-                "inner join tb_marca m on p.marca_id = m.marca_id", 
-                "where p.prod_estoque > 0");
-        
-        model = (DefaultTableModel) jTableProdutosSelecao.getModel();
-        model.setNumRows(0);
-        
-        Iterator<String> it = res.iterator();
-        while(it.hasNext()){
-            String s = (String) it.next();
-            String[] ss = s.split(",");
-            model.addRow(new Object[]{ss[0].strip(), ss[1].strip(), ss[2].strip(), Double.valueOf(ss[3].strip()), Integer.valueOf(ss[4].strip())});
-        }
-        //// ate aqui
+        controladora.popularTabelaProdutos(jTableProdutosSelecao);
+        controladora.criarNovoItemVenda();
     }//GEN-LAST:event_btnAddItemMouseClicked
 
     private void btnAddItemOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddItemOrcMouseClicked
@@ -1247,60 +1188,16 @@ public class Interface extends javax.swing.JFrame {
         painel_base.add(jPanelSelecaoProduto);
         painel_base.repaint();
         painel_base.revalidate();
+        
+        //A IMPLEMENTAR
     }//GEN-LAST:event_btnAddItemOrcMouseClicked
 
     private void btnConfirmarSelecaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarSelecaoMouseClicked
         
-        /// na controladora, pegar a linha da tabela e a quantidade no spinner, criar um itemvenda e associar o
-        // itemvenda ao vendaproduto e preencher a tabela da venda com os elementos de vendaprodutto
-        
-        int linha = jTableProdutosSelecao.getSelectedRow();
-        String cod = jTableProdutosSelecao.getModel().getValueAt(linha, 0).toString();
-        int qtde = (Integer) jSpinnerQtdProduto.getValue();
-        
-        //buscar o produto no banco com o codigo e criar um produto
-        // e um itemVenda com o produto e a quantidade
-        
-        System.out.println("COD: %s | QTDE: %s".formatted(cod, qtde));
-        List res = bd.buscaTabela(
-                "p.prod_codigo, p.prod_descricao, m.marca_nome, p.prod_preco", 
-                "tb_produto p", 
-                "inner join tb_marca m on p.marca_id = m.marca_id", 
-                "where p.prod_codigo = '%s'".formatted(cod));
-        
-        String[] split = res.get(0).toString().split(",");
-        
-        //inserir itemVenda na tabela de venda Percorrer lista de itensVenda
-        
-        model = (DefaultTableModel) jTableProdutos.getModel();
-        model.addRow(new Object[]{split[0].strip(), split[1].strip(), split[2].strip(), Double.valueOf(split[3].strip()), qtde, qtde*Double.valueOf(split[3].strip())});
-        
-        int total = 0;
-        for(int i = 0; i < jTableProdutos.getRowCount(); i++){
-           int Amount = (int) jTableProdutos.getValueAt(i, 4);
-            total = Amount+total;
-        
-        }
-        
-        //// atualizar os valores, calculos para exemplo, sem verificacoes de desconto
-        //// aplicando desconto fixo no momento
-        double total2 = 0;
-        for(int i = 0; i < jTableProdutos.getRowCount(); i++){
-           double Amount2 = (double) jTableProdutos.getValueAt(i, 5);
-            total2 = Amount2+total2;
-        }
-        
-        double desconto = 0.1*total2;
-        
-        txtQtdItens.setText(Integer.toString(total));
-        txtSubtotal.setText("R$ %s".formatted(new DecimalFormat("0.00").format(total2)));
-
-        txtDesconto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(desconto)));
-        txtTotal.setText("R$ %s".formatted(new DecimalFormat("0.00").format(total2-desconto)));
-        //------------------------------------------------------------------------------------
+        controladora.adcionaProduto(jTableProdutosSelecao, jTableProdutos, jSpinnerQtdProduto, txtQtdItens, txtSubtotal, txtTotal, txtDesconto);
         
         painel_base.removeAll();
-        if(this.operacao.equals("Venda")){
+        if(this.controladora.getOperacao().equals("Venda")){
             painel_base.add(jPanelVenda);
         }else{
             painel_base.add(jPanelOrcamento);
@@ -1310,9 +1207,10 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfirmarSelecaoMouseClicked
 
     private void btnConfirmarVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarVendaMouseClicked
-        
-        txtTotalPgto.setText(txtTotal.getText().toString());
-        
+
+        this.controladora.finalizarSelecao(txtTotalPgto);
+        controladora.setFormaPagamento("DINHEIRO");
+
         painel_base.removeAll();
         buttonGroup1.add(jRBDebito);
         buttonGroup1.add(jRBCredito);
@@ -1321,14 +1219,23 @@ public class Interface extends javax.swing.JFrame {
         jRBDinheiro.setSelected(true);
         jSpinnerPgtoCartao.setEnabled(false);
         
-        
         painel_base.add(jPanelPagamento);
         painel_base.repaint();
         painel_base.revalidate();
     }//GEN-LAST:event_btnConfirmarVendaMouseClicked
 
     private void btnConfirmarPgtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarPgtoMouseClicked
-        // TODO add your handling code here:
+
+        JOptionPane.showConfirmDialog(null, "Venda Concluída com Sucesso!", "Venda Concluída", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+         
+        painel_base.removeAll();
+        painel_base.add(jPanelInicial);
+        painel_base.repaint();
+        painel_base.revalidate();
+        
+        controladora.finalizarVenda();
+        
+        
     }//GEN-LAST:event_btnConfirmarPgtoMouseClicked
 
     private void btnCancelarPgtoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarPgtoMouseClicked
@@ -1336,10 +1243,12 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarPgtoMouseClicked
 
     private void btnConfirmarOrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfirmarOrcMouseClicked
-        // TODO add your handling code here:
+        // A IMPLEMENTAR
     }//GEN-LAST:event_btnConfirmarOrcMouseClicked
 
     private void inputNumOrcamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputNumOrcamentoKeyPressed
+        //A IMPLEMENTAR
+        
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             System.out.println(inputNumOrcamento.getText());
             // na controladora: pegar o numero do orçamento e procurar os dados do orcamento, como cliente
@@ -1354,18 +1263,10 @@ public class Interface extends javax.swing.JFrame {
 
     private void inputCPFClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputCPFClienteKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            System.out.println(inputCPFCliente.getText());
-            // na controladora: pegar o numero do cfp e procurar os dados do
-            // cliente para apresentar na tela
             
-            List cliente = bd.buscaTabela("cli_nome", "tb_cliente", "", "where cli_cpf = '%s'".formatted(inputCPFCliente.getText()));
+            controladora.getVendaProduto().getVenda().setCli(controladora.buscaCliente(inputCPFCliente.getText().toString()));
             
-            String nome = cliente.get(0).toString().split(",")[0];
-            System.out.println(nome);
-            
-            txtNomeCliente.setText(nome);
-            
-            
+            txtNomeCliente.setText(controladora.getVendaProduto().getVenda().getCli().getNome());
         }
         else if(evt.getKeyCode() == KeyEvent.VK_DELETE){
             inputCPFCliente.setText("");
@@ -1375,8 +1276,11 @@ public class Interface extends javax.swing.JFrame {
     private void jRBCreditoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRBCreditoMouseClicked
         inputPgtoDin.setEnabled(false);
         jSpinnerPgtoCartao.setEnabled(true);
-        txtTrocoPgto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(0.0)));
         
+        controladora.setFormaPagamento("CREDITO");
+        
+        
+        txtTrocoPgto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(0.0)));
         double val2 = Double.valueOf(txtTotalPgto.getText().split(" ")[1].replace(",", "."));
         txtParcela.setText("R$ %s".formatted(new DecimalFormat("0.00").format(val2/(int) jSpinnerPgtoCartao.getValue())));
     }//GEN-LAST:event_jRBCreditoMouseClicked
@@ -1385,8 +1289,10 @@ public class Interface extends javax.swing.JFrame {
         inputPgtoDin.setEnabled(false);
         jSpinnerPgtoCartao.setEnabled(false);
         jSpinnerPgtoCartao.setValue(1);
-        txtTrocoPgto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(0.0)));
         
+        controladora.setFormaPagamento("DEBITO");
+        
+        txtTrocoPgto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(0.0)));
         double val2 = Double.valueOf(txtTotalPgto.getText().split(" ")[1].replace(",", "."));
         txtParcela.setText("R$ %s".formatted(new DecimalFormat("0.00").format(val2)));
     }//GEN-LAST:event_jRBDebitoMouseClicked
@@ -1394,6 +1300,9 @@ public class Interface extends javax.swing.JFrame {
     private void jRBDinheiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRBDinheiroMouseClicked
         inputPgtoDin.setEnabled(true);
         jSpinnerPgtoCartao.setEnabled(false);
+        
+        controladora.setFormaPagamento("DINHEIRO");
+        
     }//GEN-LAST:event_jRBDinheiroMouseClicked
 
     private void inputPgtoDinKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputPgtoDinKeyPressed
@@ -1414,6 +1323,24 @@ public class Interface extends javax.swing.JFrame {
         txtParcela.setText("R$ %s".formatted(new DecimalFormat("0.00").format(val2/(int) jSpinnerPgtoCartao.getValue())));
     }//GEN-LAST:event_jSpinnerPgtoCartaoStateChanged
 
+    
+    
+    
+    
+    
+    public void limpaTelaVenda(){
+        txtNumVenda.setText("");
+        txtNomeCliente.setText("INSIRA O CPF DO CLIENTE");
+        txtNomeVendedor.setText("");
+        txtCodVendedor.setText("");
+        inputCPFCliente.setText("");
+        inputNumOrcamento.setText("");
+        txtQtdItens.setText("000");
+        txtSubtotal.setText("R$ 0,00");
+        txtDesconto.setText("R$ 0,00");
+        txtTotal.setText("R$ 0,00");
+    }
+    
     /**
      * @param args the command line arguments
      */

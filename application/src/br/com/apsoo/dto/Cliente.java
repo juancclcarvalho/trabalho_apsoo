@@ -19,6 +19,10 @@ public class Cliente  extends Pessoa{
         this._pontos = _pontos;
     }
 
+    public Cliente(String _cpf, String _nome, String _endereco, String _telefone, String _email) {
+        super(_cpf, _nome, _endereco, _telefone, _email);
+    }
+
     public int getId() {return _id;}
     public void setId(int _id) {this._id = _id;}
 

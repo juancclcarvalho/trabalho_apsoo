@@ -110,8 +110,9 @@ CREATE TABLE "public"."tb_venda"
   "ven_data_hora" Date NOT NULL,
   "ven_qtde_prod" Integer NOT NULL,
   "ven_subtotal" Numeric(30,6) NOT NULL,
-  "ven_desconto" Numeric(30,6),
+  "ven_desconto" Numeric(30,6) NOT NULL,
   "ven_total" Numeric(30,6) NOT NULL,
+  "ven_forma_pgto" Character varying(25) NOT NULL,
   "cli_id" Integer NOT NULL,
   "func_id" Integer NOT NULL,
   "fu_id" Integer NOT NULL
@@ -273,3 +274,4 @@ ALTER TABLE "public"."tb_orcamento_produto"
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 ;
+

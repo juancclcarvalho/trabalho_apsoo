@@ -6,26 +6,26 @@ INSERT INTO public."tb_funcao"(fu_nome)	VALUES ('Estoquista');
 
 
 INSERT INTO public."tb_funcionario"(
-	func_cpf, func_nome, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
-	VALUES ('145.568.198-12', 'Juan Carvalho', '(67)94002-8922', 'juanccl@todoeletronicos.com', 1, '87123', 0);
+	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
+	VALUES ('145.568.198-12', 'Rua UFMS Cidade Universitária', 'Juan Carvalho', '(67)94002-8922', 'juanccl@todoeletronicos.com', 1, '87123', 0);
 INSERT INTO public."tb_funcionario"(
 	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
-	VALUES ('813.123.871-98', 'Leonardo Esperança', 'Rua Portugal, 123 - Jd Europa', '(67)97667-9812', 'leonardoesp@todoeletronicos.com', 2, '98134', 0);
+	VALUES ('813.123.871-98', 'Leonardo Esperança', 'Rua Portugal 123 - Jd Europa', '(67)97667-9812', 'leonardoesp@todoeletronicos.com', 2, '98134', 0);
 INSERT INTO public."tb_funcionario"(
 	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
-	VALUES ('541.891.081-54', 'Patrick Escorsi', 'Rua Ipê, 8123 - Bosque Das Árvores', '(67)96671-6211', 'patrick@todoeletronicos.com', 2, '65123', 0);
+	VALUES ('541.891.081-54', 'Patrick Escorsi', 'Rua Ipê 8123 - Bosque Das Árvores', '(67)96671-6211', 'patrick@todoeletronicos.com', 2, '65123', 0);
 INSERT INTO public."tb_funcionario"(
 	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
-	VALUES ('671.901.031-61', 'Calel Becassi', 'Rua Paraná, 513 - Jd Dos Estados', '(67)97612-6543', 'calelbecassi@@todoeletronicos.com', 3, '66290', 0);
+	VALUES ('671.901.031-61', 'Calel Becassi', 'Rua Paraná 513 - Jd Dos Estados', '(67)97612-6543', 'calelbecassi@@todoeletronicos.com', 3, '66290', 0);
 
 
 INSERT INTO public."tb_cliente"(
 	cli_cpf, cli_endereco, cli_telefone, cli_email, cli_nome, cli_pontos_fidelidade)
-	VALUES ('812.543.871-91', 'Avenida Afonso Pena, 21 - Centro', '(67)98765-4321', 'malubeal@hotmail.com', 'Maria Luiza', 0);
+	VALUES ('812.543.871-91', 'Avenida Afonso Pena 21 - Centro', '(67)98765-4321', 'malubeal@hotmail.com', 'Maria Luiza', 0);
 
 INSERT INTO public."tb_cliente"(
 	cli_cpf, cli_endereco, cli_telefone, cli_email, cli_nome, cli_pontos_fidelidade)
-	VALUES ('612.091.871-65', 'Rua Dos Girassóis, 912 - Jd. Botânico', '(67)99143-0912', 'seitir@gmail.com', 'Rodrigo Seiti', 0);
+	VALUES ('612.091.871-65', 'Rua Dos Girassóis 912 - Jd. Botânico', '(67)99143-0912', 'seitir@gmail.com', 'Rodrigo Seiti', 0);
 
 
 INSERT INTO public."tb_marca"(marca_nome, marca_sigla) VALUES ('Dell Eletronics', 'DELL');
@@ -63,13 +63,13 @@ INSERT INTO public."tb_produto"(
 	VALUES ('A2342', 'iPhone 12 Pro Max', 'Dourado', 12999, 'iPhone 12 Pro Max 512GB Dourado', 100, 8);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('B08FF9QQ3B', 'Razer Basilisk', 'Preto, Colorido', 859.78, 'Mouse Razer Basilisk Ultimate Preto RGB 14 Leds Pilha Sem Fio', 50, 4);
+	VALUES ('B08FF9QQ3B', 'Razer Basilisk', 'Preto Colorido', 859.78, 'Mouse Razer Basilisk Ultimate Preto RGB 14 Leds Pilha Sem Fio', 50, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
 	VALUES ('B07ZK6R8JF', 'Razer Kraken', 'Preto', 1182.34, 'Razer Kraken Ultimate RGB Fone de ouvido USB para jogos: THX 7.1 Spatial Surround Sound - Iluminação Chroma RGB', 120, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
-	VALUES ('B08BFF4C7J', 'Razer Huntsman', 'Preto, RGB', 984.30, 'Teclado Razer Huntsman Mini-Click Purple Switch Preto', 80, 4);
+	VALUES ('B08BFF4C7J', 'Razer Huntsman', 'Preto RGB', 984.30, 'Teclado Razer Huntsman Mini-Click Purple Switch Preto', 80, 4);
 INSERT INTO public."tb_produto"(
 	prod_codigo, prod_modelo, prod_cor, prod_preco, prod_descricao, prod_estoque, marca_id)
 	VALUES ('i3501m10pfmp', 'Dell Inspiron', 'Chumbo', 2599.0, 'Novo Inspiron 15 3000', 300, 1);
@@ -134,3 +134,15 @@ SELECT COUNT(*) FROM public."tb_orcamento";
 SELECT COUNT(*) FROM public."tb_orcamento_produto";
 SELECT COUNT(*) FROM public."tb_venda";
 SELECT COUNT(*) FROM public."tb_venda_produto";
+
+
+DROP TABLE tb_cliente;
+DROP TABLE tb_orcamento;
+DROP TABLE tb_orcamento_produto;
+DROP TABLE tb_produto;
+DROP TABLE tb_marca;
+DROP TABLE tb_funcionario;
+DROP TABLE tb_funcao;
+DROP TABLE tb_venda;
+DROP TABLE tb_venda_produto;
+

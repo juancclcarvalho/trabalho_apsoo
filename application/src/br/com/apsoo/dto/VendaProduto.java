@@ -5,7 +5,7 @@ import java.util.List;
 public class VendaProduto {
     private int _id;
     private Venda _venda;
-    private List<ItemVenda> _itens_venda;
+    
 
     public VendaProduto(Venda _venda, List<ItemVenda> _itens_venda) {
         this._id = -1;

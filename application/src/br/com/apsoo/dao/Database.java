@@ -38,7 +38,7 @@ public class Database {
                 while(this.rs.next()){
                     for(int i=1; i <= this.rs.getMetaData().getColumnCount(); i++){
                         if(i>1 || i==this.rs.getMetaData().getColumnCount()-1){
-                            registro = registro.concat(", ");
+                            registro = registro.concat(",");
                         }
                         registro = registro.concat(this.rs.getString(i));
                     }

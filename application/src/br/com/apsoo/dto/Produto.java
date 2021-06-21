@@ -33,6 +33,9 @@ public class Produto {
         this._marca = _marca;
     }
 
+    public Produto() {
+    }
+
     public int getId() {return _id;}
     public void setId(int _id) {this._id = _id;}
     

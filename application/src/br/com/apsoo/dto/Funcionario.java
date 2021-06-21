@@ -23,6 +23,10 @@ public class Funcionario extends Pessoa {
         this._total_vendas = _total_vendas;
     }
 
+    public Funcionario(String _cpf, String _nome, String _endereco, String _telefone, String _email) {
+        super(_cpf, _nome, _endereco, _telefone, _email);
+    }
+
     public int getId() {return _id;}
     public void setId(int _id) {this._id = _id;}
     
