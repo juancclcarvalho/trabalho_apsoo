@@ -14,33 +14,7 @@ public class Venda {
     private Cliente _cli;
     private Funcionario _fun;
     private List<ItemVenda> _itens_venda;
-
-    public Venda(String _codigo, String data_hora, String forma_pgto, Integer _qtde_produtos, double _subtotal, double _desconto, double _total, Cliente _cli, Funcionario _fun) {
-        this._id = -1;
-        this._codigo = _codigo;
-        this.data_hora = data_hora;
-        this._qtde_produtos = _qtde_produtos;
-        this._subtotal = _subtotal;
-        this._desconto = _desconto;
-        this._total = _total;
-        this._cli = _cli;
-        this._fun = _fun;
-        this.forma_pgto = forma_pgto;
-    }
-    
-    public Venda(int _id, String _codigo, String data_hora, String forma_pgto, Integer _qtde_produtos, double _subtotal, double _desconto, double _total, Cliente _cli, Funcionario _fun) {
-        this._id = _id;
-        this._codigo = _codigo;
-        this.data_hora = data_hora;
-        this._qtde_produtos = _qtde_produtos;
-        this._subtotal = _subtotal;
-        this._desconto = _desconto;
-        this._total = _total;
-        this._cli = _cli;
-        this._fun = _fun;
-        this.forma_pgto = forma_pgto;
-    }
-    
+ 
     public Venda(){
     }
 
@@ -73,4 +47,10 @@ public class Venda {
 
     public Funcionario getFun() {return _fun;}
     public void setFun(Funcionario _fun) {this._fun = _fun;}
+
+    public List<ItemVenda> getItens_venda() {return _itens_venda;}
+
+    public void setItens_venda(List<ItemVenda> _itens_venda) {this._itens_venda = _itens_venda;}
+    
+    
 }

@@ -1,5 +1,7 @@
 package br.com.apsoo.dto;
 
+import java.util.List;
+
 public class Orcamento {
     private int _id;
     private String _codigo;
@@ -9,6 +11,7 @@ public class Orcamento {
     private double _subtotal;
     private Cliente _cli;
     private Funcionario _fun;
+    private List<ItemVenda> _itens_orcamento;
 
     public Orcamento(String _codigo, String data_hora, String data_validade, int _qtde_produtos, double _subtotal, Cliente _cli, Funcionario _fun) {
         this._id = -1;

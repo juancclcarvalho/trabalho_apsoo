@@ -54,4 +54,8 @@ public class Funcionario extends Pessoa {
     public int getTotal_vendas() {return _total_vendas;}
     public void setTotal_vendas(int _total_vendas) {this._total_vendas = _total_vendas;}
 
+    @Override
+    public String toString() {
+        return this.getNome()+" - "+this.getFuncao().getNome() +" - "+ this.getEmail();
+    }
 }

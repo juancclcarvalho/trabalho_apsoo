@@ -27,7 +27,7 @@ public class Database {
         }
     }
     
-    public List buscaTabela(String campos, String tabela, String joins, String filtro) {
+    public List buscaTabela(String campos, String tabela, String joins, String filtro) throws SQLException {
         String query = "SELECT " + campos + " FROM public." + tabela + " " + joins + " " + filtro;
         List<String> resultado = new ArrayList<>();
         String registro  = "";
@@ -52,8 +52,8 @@ public class Database {
             
         } catch (SQLException e) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, e);
+            throw e;
         }
-        return resultado;
     }
     
     public void insereTabela(String tabela, String campos, String valores) {
