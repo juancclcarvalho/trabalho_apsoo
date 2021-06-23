@@ -1,135 +1,61 @@
 package br.com.apsoo.dto;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 public class Venda {
-    private Vendedor vendedor;
-    private Cliente cliente;
-    private double desconto;
-    private int formaPagamento;
-    private double valorVenda;
-    private double total;
-    private Date data;
-    private VendaProduto produtos;
-
-    public Venda(Vendedor vendedor, Cliente cliente, double desconto, int formaPagamento, double valorVenda, double total, Date data, VendaProduto produtos) {
-        setVendedor(vendedor);
-        setCliente(cliente);
-        setDesconto(desconto);
-        setFormaPagamento(formaPagamento);
-        setValorVenda(valorVenda);
-        setTotal(total);
-        setData(data);
-        setProdutos(produtos);
-    }
-    
+    private int _id;
+    private String _codigo;
+    private String data_hora;
+    private String forma_pgto;
+    private Integer _qtde_produtos;
+    private double _subtotal;
+    private double _desconto;
+    private double _total;
+    private Cliente _cli;
+    private Funcionario _fun;
+    private List<ItemVenda> _itens_venda;
+ 
     public Venda(){
-        
-    }
-   
-    public Vendedor getVendedor() {
-        return vendedor;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+    public int getId() {return _id;}
+    public void setId(int _id) {this._id = _id;}
 
-    public double getDesconto() {
-        return desconto;
-    }
+    public String getCodigo() {return _codigo;}
+    public void setCodigo(String _codigo) {this._codigo = _codigo;}
 
-    public int getFormaPagamento() {
-        return formaPagamento;
-    }
+    public String getData_hora() {return data_hora;}
+    public void setData_hora(String data_hora) {this.data_hora = data_hora;}
 
-    public double getValorVenda() {
-        return valorVenda;
-    }
-
-    public double getTotal() {
-        return total;
-    }
+    public String getForma_pgto() {return forma_pgto;}
+    public void setForma_pgto(String forma_pgto) {this.forma_pgto = forma_pgto;}
     
-    public Date getData() {
-        return data;
+    public int getQtde_produtos() {return _qtde_produtos;}
+    public void setQtde_produtos(Integer _qtde_produtos) {this._qtde_produtos = _qtde_produtos;}
+
+    public double getSubtotal() {return _subtotal;}
+    public void setSubtotal(double _subtotal) {this._subtotal = _subtotal;}
+
+    public double getDesconto() {return _desconto;}
+    public void setDesconto(double _desconto) {this._desconto = _desconto;}
+
+    public double getTotal() {return _total;}
+    public void setTotal(double _total) {this._total = _total;}
+
+    public Cliente getCli() {return _cli;}
+    public void setCli(Cliente _cli) {this._cli = _cli;}
+
+    public Funcionario getFun() {return _fun;}
+    public void setFun(Funcionario _fun) {this._fun = _fun;}
+
+    public List<ItemVenda> getItens_venda() {return _itens_venda;}
+    public void setItens_venda(List<ItemVenda> _itens_venda) {this._itens_venda = _itens_venda;}
+
+    @Override
+    public String toString() {
+        return getCodigo() + ", '" + getData_hora() + "', " + getQtde_produtos() +
+               ", " + getSubtotal() + ", " + getDesconto() + ", " + getTotal() + 
+               ", '" + getForma_pgto() + "', " + getCli().getId() + ", " + getFun().getId() + ", " + getFun().getFuncao().getId();
     }
 
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public void setDesconto(double desconto) {
-        this.desconto = desconto;
-    }
-
-    public void setFormaPagamento(int formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public void setValorVenda(double valorVenda) {
-        this.valorVenda = valorVenda;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public VendaProduto getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(VendaProduto produtos) {
-        this.produtos = produtos;
-    }
-    
-    public String calculaDesconto(String valorVenda) {
-        double valor = Double.parseDouble(valorVenda);
-        double valorReal = 0;
-        String valorString;
-        if(valor > 500) {
-            valorReal = valor*0.05;
-        } 
-        if (valor > 200) {
-            valorReal = valor*0.02;
-        }
-        valorString = Double.toString(valorReal);
-        return valorString;
-    }
-    
-    public String calculaTotal(String valorVenda, String desconto) {
-        double valor = Double.parseDouble(valorVenda);
-        double descontoDouble = Double.parseDouble(desconto);
-        double totalDouble = valor - descontoDouble;
-        String totalString = Double.toString(totalDouble);
-        return totalString;
-    }
-    
-    public String calculaValorVenda(String valorVenda, String preco, int i) {
-        double valorTotal;
-        String valorTotalString;
-        double valor = Double.parseDouble(valorVenda);
-        double precoConvertido = Double.parseDouble(preco);
-        if (i == 1) {
-            valorTotal = valor + precoConvertido;
-        } else {
-            valorTotal = valor - precoConvertido;
-        }
-        valorTotalString = Double.toString(valorTotal);
-        return valorTotalString;
-    }
-    
-    
-    
 }
