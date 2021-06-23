@@ -54,101 +54,99 @@ public class Controladora {
 
     public void setFuncionario(Funcionario funcionario) {this.funcionario = funcionario;}
     
+
     
+    public void finalizarVenda(String data_hora){
+        
+        venda.setData_hora(data_hora);
+        
+        int pontos = venda.getCli().getPontos();
+        int vendas = venda.getFun().getTotal_vendas();
+        venda.getCli().setPontos(pontos + 20);
+        venda.getFun().setTotal_vendas(vendas + 1);
+        String pontos_atualizado = String.valueOf(venda.getCli().getPontos());
+        String vendas_atualizado = String.valueOf(venda.getFun().getTotal_vendas());
+
+        
+        bd.atualizaTabela("tb_cliente", "cli_pontos_fidelidade", pontos_atualizado, "where cli_cpf = '%s'".formatted(venda.getCli().getCpf()));
+        bd.atualizaTabela("tb_funcionario", "func_total_vendas", vendas_atualizado, "where func_cpf = '%s' and func_cod_acesso = '%s'".formatted(venda.getFun().getCpf(), venda.getFun().getCod_acesso()));
+
+        System.out.println(venda.toString());
+        
+        bd.insereTabela(
+                "tb_venda", 
+                "ven_cod, ven_data_hora, ven_qtde_prod, ven_subtotal, ven_desconto, ven_total, ven_forma_pgto, cli_id, func_id, fu_id", 
+                venda.toString());
+        
+        System.out.println("br.com.apsoo.dto.Controladora.finalizarVenda()");
+        
+        //escrever os itens na vendaProduto
+        //atualizar a quantiddade do produto
+        
+        
+    }
+
+    public double calculaValorParcela(int parcelas){
+        return venda.getTotal()/parcelas;
+    }
     
-//        
-//    public void finalizarVenda(){
-//        
-//        System.out.println("br.com.apsoo.dto.Controladora.finalizarVenda()");
-//        ///atualizar valores dos campos
-//        //escrever nas tabelas de venda e de vendaproduto
-//        // atualizar pontos cliente
-//        // atualizar as vendas do vendedor
-//        // atualizar estoque do produto
-//        
-//        
-//    }
-//    
-//    public void setFormaPagamento(String forma){
-//        this.getVendaProduto().getVenda().setForma_pgto(forma);
-//    }
-//    
-//    public void finalizarSelecao(JLabel total_pagamento){
-//        total_pagamento.setText("R$ %s".formatted(new DecimalFormat("0.00").format(this.getVendaProduto().getVenda().getTotal())));
-//        
-//    }
-//    
-//    public void adcionaProduto(JTable tabela, JTable tabela_destino, JSpinner spinner, JLabel qtde, JLabel subtotal, JLabel total, JLabel desconto){
-//        
-//        String cod_produto = tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString();
-//        int qtde_item = (Integer) spinner.getValue();
-//        
-//        Produto p = buscaProduto(cod_produto);
-//        this.getItemVenda().setItem(p);
-//        this.getItemVenda().setQtde_item(qtde_item);
-//        this.getItemVenda().setTotal_item(qtde_item * p.getPreco());
-//        
-//        this.getVendaProduto().getItens_venda().add(this.getItemVenda());
-//        
-//        model = (DefaultTableModel) tabela_destino.getModel();
-//        model.addRow(new Object[]{  p.getCodigo(), p.getDescricao(), p.getMarca().getNome(), 
-//                                    p.getPreco(), itemVenda.getQtde_item(), itemVenda.getTotal_item()});
-//       
-//        atualizaCalculosVenda(tabela_destino, qtde, subtotal, total, desconto);
-//               
-//    }
-//    
-//    public void atualizaCalculosVenda(JTable tabela_destino, JLabel qtde, JLabel subtotal, JLabel total, JLabel desconto){
-//        this.getVendaProduto().getVenda().setQtde_produtos(this.getVendaProduto().getVenda().getQtde_produtos() + 1);
-//        
-//        qtde.setText(Integer.valueOf(this.getVendaProduto().getVenda().getQtde_produtos()).toString());
-//        
-//        double subtotal_valor = 0;
-//        for(int i = 0; i < tabela_destino.getRowCount(); i++){
-//           double total_item = (double) tabela_destino.getValueAt(i, 5);
-//            subtotal_valor = total_item+subtotal_valor;
-//        }
-//        this.getVendaProduto().getVenda().setSubtotal(subtotal_valor);
-//        subtotal.setText("R$ %s".formatted(new DecimalFormat("0.00").format(this.getVendaProduto().getVenda().getSubtotal())));
-//        
-//        double desconto_pct;
-//        if(subtotal_valor > 200.0){
-//            desconto_pct = 0.02;
-//        }else if(subtotal_valor > 500.0){
-//            desconto_pct = 0.05;
-//        }
-//        else desconto_pct = 0.0;
-//        
-//        
-//        this.getVendaProduto().getVenda().setDesconto(desconto_pct*subtotal_valor);
-//        this.getVendaProduto().getVenda().setTotal(subtotal_valor - (desconto_pct*subtotal_valor));
-//        
-//        desconto.setText("R$ %s".formatted(new DecimalFormat("0.00").format(this.getVendaProduto().getVenda().getDesconto())));
-//        total.setText("R$ %s".formatted(new DecimalFormat("0.00").format(this.getVendaProduto().getVenda().getTotal())));
-//        
-//    }
-//    
-//    public void criarNovoItemVenda(){
-//        this.itemVenda = new ItemVenda();
-//    }
-//    
-//   
-//    
-//    public void cancelarVenda(){
-//        this.setCliente(null);
-//        this.setVenda(null);
-//        this.setVendaProduto(null);
-//        this.setFuncionario(null);
-//        this.setOperacao(null);
-//        this.setItemVenda(null);
-//    }
+    public double calculaTroco(double valorPago) throws Exception{
+        if(valorPago >= venda.getTotal()){
+            return valorPago - venda.getTotal();
+        }
+        else throw new Exception();
+    }
+    
+    public void setFormaPagamento(String forma){
+        this.getVenda().setForma_pgto(forma);
+    }
+
+    
+    public void cancelarVenda(){
+        this.setVenda(null);
+        this.setFuncionario(null);
+        this.setOperacao(null);
+    }
     
     //associa um item selecionado à venda
     public void associa_item_venda(ItemVenda iv){
         venda.getItens_venda().add(iv);
+        venda.setQtde_produtos(venda.getQtde_produtos()+1);
+        calcula_valores_venda();
+        
+        System.out.println(venda.getItens_venda().size());
     }
     
+    //remove um item da venda
+    public void remove_item_venda(String cod_produto, int quantidade){
+        ItemVenda iv_remover = new ItemVenda(new Produto(), quantidade, 0.0);
+        iv_remover.getItem().setCodigo(cod_produto);
+        
+        venda.getItens_venda().remove(iv_remover);
+        venda.setQtde_produtos(venda.getQtde_produtos()-1);
+        calcula_valores_venda();
+        
+        System.out.println(venda.getItens_venda().size());
+    }
     
+    public void calcula_valores_venda(){
+        double subtotal = 0;
+        for(int i = 0; i < venda.getQtde_produtos(); i++){
+            subtotal = subtotal + venda.getItens_venda().get(i).getTotal_item();
+        }
+        
+        double desconto = 0.0;
+        if(subtotal > 200.0){
+            desconto = 0.02*subtotal;
+        }else if(subtotal > 500.0){
+            desconto = 0.05*subtotal;
+        }
+        else desconto = 0.0;
+        
+        venda.setSubtotal(subtotal);
+        venda.setDesconto(desconto);
+        venda.setTotal(subtotal-desconto);
+    }
     
     // busca todos os produtos na tb_produto e retorna uma lista com os resultados
     public List busca_catalogo() throws SQLException{
@@ -252,8 +250,7 @@ public class Controladora {
                 
         return m;
     }
-    
-    
+   
     public Produto buscaProduto(String cod_produto) throws SQLException{
         try{
             String[] res = this.bd.buscaTabela("*", "tb_produto p", 
@@ -282,11 +279,7 @@ public class Controladora {
         }
     }
     
-    
-//    public String getTimerDataHora(JLabel data, JLabel hora){
-//        return data.getText().toString() + "_" + hora.getText().toString();
-//    }
-    
+
 }
 
 

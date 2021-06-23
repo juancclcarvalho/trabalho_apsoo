@@ -49,8 +49,13 @@ public class Venda {
     public void setFun(Funcionario _fun) {this._fun = _fun;}
 
     public List<ItemVenda> getItens_venda() {return _itens_venda;}
-
     public void setItens_venda(List<ItemVenda> _itens_venda) {this._itens_venda = _itens_venda;}
-    
-    
+
+    @Override
+    public String toString() {
+        return getCodigo() + ", '" + getData_hora() + "', " + getQtde_produtos() +
+               ", " + getSubtotal() + ", " + getDesconto() + ", " + getTotal() + 
+               ", '" + getForma_pgto() + "', " + getCli().getId() + ", " + getFun().getId() + ", " + getFun().getFuncao().getId();
+    }
+
 }

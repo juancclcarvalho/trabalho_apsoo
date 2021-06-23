@@ -25,5 +25,18 @@ public class ItemVenda {
 
     public double getTotal_item() {return _total_item;}
     public void setTotal_item(double _total_item) {this._total_item = _total_item;}
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        ItemVenda iv = (ItemVenda) obj;
+        
+        if(iv.getItem().getCodigo().equals(this.getItem().getCodigo()) && iv.getQtde_item() == this.getQtde_item() ){
+            return true;
+        }
+        else return false;
+    }
+    
+    
     
 }

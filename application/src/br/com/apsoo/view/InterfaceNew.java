@@ -108,8 +108,6 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelQtdeItensCompraOrca = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabelSubtotalCompraOrca = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabelDescontoOrca = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabelTotalOrca = new javax.swing.JLabel();
         jButtonCancelarOrca = new javax.swing.JButton();
@@ -153,13 +151,12 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabelNomePix = new javax.swing.JLabel();
         jLabelValorParcelaCredito = new javax.swing.JLabel();
         jLabelValorParcelaDebito = new javax.swing.JLabel();
         jTextFieldPagamentoDinheiro = new javax.swing.JTextField();
         jSpinnerDebito = new javax.swing.JSpinner();
         jSpinnerCredito = new javax.swing.JSpinner();
+        jTextFieldChavePix = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Venda de Eletrônicos");
@@ -377,6 +374,11 @@ public class InterfaceNew extends javax.swing.JFrame {
         });
 
         jButtonRemItem.setText("Remover Item");
+        jButtonRemItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRemItemMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel9.setText("Itens");
@@ -403,8 +405,18 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelTotal.setText("R$ 0,00");
 
         jButtonCancelarSelecao.setText("CANCELAR");
+        jButtonCancelarSelecao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCancelarSelecaoMouseClicked(evt);
+            }
+        });
 
         jButtonFinalizarSelecao.setText("PROSSEGUIR");
+        jButtonFinalizarSelecao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonFinalizarSelecaoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelVendaLayout = new javax.swing.GroupLayout(jPanelVenda);
         jPanelVenda.setLayout(jPanelVendaLayout);
@@ -637,12 +649,6 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelSubtotalCompraOrca.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelSubtotalCompraOrca.setText("R$ 0,00");
 
-        jLabel13.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        jLabel13.setText("Desconto");
-
-        jLabelDescontoOrca.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
-        jLabelDescontoOrca.setText("R$ 0,00");
-
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel14.setText("Total Orçado");
 
@@ -710,15 +716,9 @@ public class InterfaceNew extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOrcamentoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel13))
+                .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelTotalOrca)
-                    .addGroup(jPanelOrcamentoLayout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabelDescontoOrca)))
+                .addComponent(jLabelTotalOrca)
                 .addGap(60, 60, 60)
                 .addComponent(jButtonCancelarOrca, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
@@ -785,11 +785,7 @@ public class InterfaceNew extends javax.swing.JFrame {
                     .addComponent(jLabelQtdeItensCompraOrca)
                     .addComponent(jLabel8)
                     .addComponent(jLabelSubtotalCompraOrca))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabelDescontoOrca))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addGroup(jPanelOrcamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jLabelTotalOrca)
@@ -932,8 +928,18 @@ public class InterfaceNew extends javax.swing.JFrame {
         jPanelConteudo.add(jPanelSelecaoProduto, "card6");
 
         jButtonCancelarVenda.setText("CANCELAR");
+        jButtonCancelarVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCancelarSelecaoMouseClicked(evt);
+            }
+        });
 
         jButtonConfirmarVenda.setText("CONFIRMAR");
+        jButtonConfirmarVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonConfirmarVendaMouseClicked(evt);
+            }
+        });
 
         jLabel32.setFont(new java.awt.Font("Dialog", 0, 28)); // NOI18N
         jLabel32.setText("Pagamento da Venda");
@@ -943,15 +949,35 @@ public class InterfaceNew extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButtonDIN);
         jRadioButtonDIN.setText("Dinheiro: à vista");
+        jRadioButtonDIN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButtonDINMouseClicked(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButtonCRE);
         jRadioButtonCRE.setText("Cartão de crédito: até 12x");
+        jRadioButtonCRE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButtonCREMouseClicked(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButtonDEB);
         jRadioButtonDEB.setText("Cartão de débito: à vista");
+        jRadioButtonDEB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButtonDEBMouseClicked(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButtonPIX);
         jRadioButtonPIX.setText("Pix (Transferência): à vista");
+        jRadioButtonPIX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButtonPIXMouseClicked(evt);
+            }
+        });
 
         jLabel34.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel34.setText("Total a Pagar");
@@ -985,13 +1011,24 @@ public class InterfaceNew extends javax.swing.JFrame {
 
         jLabel18.setText("Chave do Pix:");
 
-        jLabel19.setText("Nome Do Cobrado");
+        jLabelValorParcelaCredito.setText("R$ 0,00");
 
-        jLabelNomePix.setText("NOME AQUI");
+        jLabelValorParcelaDebito.setText("R$ 0,00");
 
-        jLabelValorParcelaCredito.setText("R$ 000.000,00");
+        jTextFieldPagamentoDinheiro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldPagamentoDinheiroKeyPressed(evt);
+            }
+        });
 
-        jLabelValorParcelaDebito.setText("R$ 000.000,00");
+        jSpinnerDebito.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1, 1));
+
+        jSpinnerCredito.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        jSpinnerCredito.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerCreditoStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPagamentoLayout = new javax.swing.GroupLayout(jPanelPagamento);
         jPanelPagamento.setLayout(jPanelPagamentoLayout);
@@ -1025,18 +1062,6 @@ public class InterfaceNew extends javax.swing.JFrame {
                     .addGroup(jPanelPagamentoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelPagamentoLayout.createSequentialGroup()
-                                .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelPagamentoLayout.createSequentialGroup()
-                                        .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelPagamentoLayout.createSequentialGroup()
-                                        .addGap(207, 207, 207)
-                                        .addComponent(jLabelTrocoPgto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(1, 1, 1)
-                                .addComponent(jButtonCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonConfirmarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPagamentoLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1058,22 +1083,32 @@ public class InterfaceNew extends javax.swing.JFrame {
                                                 .addGap(120, 120, 120)
                                                 .addComponent(jLabel15)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(jLabelValorParcelaDebito))
+                                                .addComponent(jLabelValorParcelaDebito, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(jSpinnerCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(jPanelPagamentoLayout.createSequentialGroup()
-                                .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelPagamentoLayout.createSequentialGroup()
-                                        .addGap(207, 207, 207)
-                                        .addComponent(jLabelTotalPgto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(207, 207, 207)
+                                .addComponent(jLabelTotalPgto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPagamentoLayout.createSequentialGroup()
+                                .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanelPagamentoLayout.createSequentialGroup()
                                         .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabel18)
                                             .addComponent(jLabel34))
-                                        .addGap(215, 215, 215)
-                                        .addComponent(jLabel19)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabelNomePix, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldChavePix))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelPagamentoLayout.createSequentialGroup()
+                                        .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                                                .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanelPagamentoLayout.createSequentialGroup()
+                                                .addGap(207, 207, 207)
+                                                .addComponent(jLabelTrocoPgto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jButtonCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonConfirmarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
             .addGroup(jPanelPagamentoLayout.createSequentialGroup()
                 .addContainerGap()
@@ -1085,7 +1120,7 @@ public class InterfaceNew extends javax.swing.JFrame {
                         .addGap(217, 217, 217)
                         .addComponent(jLabel17)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabelValorParcelaCredito))
+                        .addComponent(jLabelValorParcelaCredito, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1130,16 +1165,15 @@ public class InterfaceNew extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(jLabelValorParcelaCredito)
                     .addComponent(jSpinnerCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabelNomePix))
-                .addGap(32, 32, 32)
+                    .addComponent(jTextFieldChavePix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(jPanelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel34)
                     .addComponent(jLabelTotalPgto))
@@ -1236,6 +1270,7 @@ public class InterfaceNew extends javax.swing.JFrame {
         troca_tela(jPanelSelecaoProduto);
     }//GEN-LAST:event_jButtonAddItemMouseClicked
 
+    //cancelar inclusão de item na venda
     private void jButtonCancelarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarItemMouseClicked
         if(controladora.getOperacao().equals("VENDA")){
             troca_tela(jPanelVenda);
@@ -1254,14 +1289,158 @@ public class InterfaceNew extends javax.swing.JFrame {
                 controladora.associa_item_venda(iv);
                 associa_item_venda(iv);
                 troca_tela(jPanelVenda);
-            }
+                
+                atualiza_valores_venda();            }
         }
         else{
             //controladora.associa_item_orcamento();
             troca_tela(jPanelOrcamento);
         }
     }//GEN-LAST:event_jButtonConfirmarItemMouseClicked
+
+    // remove um item da lista de itens da venda
+    private void jButtonRemItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemItemMouseClicked
+        try{
+            if(controladora.getOperacao().equals("VENDA")){
+                int remover = jTableProdutosVenda.getSelectedRow();
+                String cod_produto = jTableProdutosVenda.getModel().getValueAt(remover, 0).toString();
+                int quantidade = Integer.valueOf(jTableProdutosVenda.getModel().getValueAt(remover, 4).toString());
+                        
+                controladora.remove_item_venda(cod_produto, quantidade);
+                remove_item_tabela(jTableProdutosVenda, remover);
+                
+                atualiza_valores_venda();       
+            }
+            else{
+                //String cod_produto = jTableProdutosOrca.getModel().getValueAt(jTableProdutosOrca.getSelectedRow(), 0).toString();
+            }
+        }
+        catch (Exception e){
+            JOptionPane.showConfirmDialog(null, "Selecione um Produto Antes de Remover!", "Remover Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);            
+        }
+    }//GEN-LAST:event_jButtonRemItemMouseClicked
+
+    private void jButtonCancelarSelecaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarSelecaoMouseClicked
+        controladora.cancelarVenda();
+        JOptionPane.showConfirmDialog(null, "Venda cancelada com sucesso!", "Cancelar Operação", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        troca_tela(jPanelInicial);
+    }//GEN-LAST:event_jButtonCancelarSelecaoMouseClicked
+
+    private void jButtonFinalizarSelecaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarSelecaoMouseClicked
+        jRadioButtonDIN.setSelected(true);
+        jTextFieldChavePix.setEnabled(false);
+        jSpinnerCredito.setEnabled(false);
+        jSpinnerDebito.setEnabled(false);
+        jTextFieldPagamentoDinheiro.setEnabled(true);
+        controladora.setFormaPagamento("DINHEIRO");
+        troca_tela(jPanelPagamento);
+    }//GEN-LAST:event_jButtonFinalizarSelecaoMouseClicked
+
+    private void jRadioButtonDINMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonDINMouseClicked
+        jTextFieldChavePix.setEnabled(false);
+        jSpinnerCredito.setEnabled(false);
+        jSpinnerDebito.setEnabled(false);
+        jTextFieldPagamentoDinheiro.setEnabled(true);
+        
+        controladora.setFormaPagamento("DINHEIRO");
+
+    }//GEN-LAST:event_jRadioButtonDINMouseClicked
+
+    private void jRadioButtonDEBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonDEBMouseClicked
+        jTextFieldChavePix.setEnabled(false);
+        jSpinnerCredito.setEnabled(false);
+        jSpinnerDebito.setEnabled(true);
+        jTextFieldPagamentoDinheiro.setEnabled(false);
+        
+        jLabelTrocoPgto.setText("R$ %.2f".formatted(0.0));
+        double total_parcela = controladora.calculaValorParcela(1);
+        jLabelValorParcelaDebito.setText("R$ %.2f".formatted(total_parcela));
+        
+        controladora.setFormaPagamento("DÉBITO");
+    }//GEN-LAST:event_jRadioButtonDEBMouseClicked
+
+    private void jRadioButtonCREMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonCREMouseClicked
+        jTextFieldChavePix.setEnabled(false);
+        jSpinnerCredito.setEnabled(true);
+        jSpinnerDebito.setEnabled(false);
+        jTextFieldPagamentoDinheiro.setEnabled(false);
+        
+        jLabelTrocoPgto.setText("R$ %.2f".formatted(0.0));
+        double total_parcela = controladora.calculaValorParcela(1);
+        jLabelValorParcelaCredito.setText("R$ %.2f".formatted(total_parcela));
+        
+        controladora.setFormaPagamento("CRÉDITO");
+
+    }//GEN-LAST:event_jRadioButtonCREMouseClicked
+
+    private void jRadioButtonPIXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonPIXMouseClicked
+        jTextFieldChavePix.setEnabled(true);
+        jSpinnerCredito.setEnabled(false);
+        jSpinnerDebito.setEnabled(false);
+        jTextFieldPagamentoDinheiro.setEnabled(false);
+        
+        jLabelTrocoPgto.setText("R$ %.2f".formatted(0.0));
+        
+        controladora.setFormaPagamento("PIX");
+    }//GEN-LAST:event_jRadioButtonPIXMouseClicked
+
+    private void jTextFieldPagamentoDinheiroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPagamentoDinheiroKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            double valor = Double.valueOf(jTextFieldPagamentoDinheiro.getText());
+        
+            try {
+                double troco = controladora.calculaTroco(valor);
+                jLabelTrocoPgto.setText("R$ %.2f".formatted(troco));
+            } catch (Exception e) {
+                JOptionPane.showConfirmDialog(null, "Insira um valor maior ou igual ao total da compra!", "Pagamento Dinheiro", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            }
+        
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_DELETE){
+            jTextFieldPagamentoDinheiro.setText("");
+        }    }//GEN-LAST:event_jTextFieldPagamentoDinheiroKeyPressed
+
+    private void jSpinnerCreditoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerCreditoStateChanged
+        
+        int parcelas = Integer.valueOf(jSpinnerCredito.getValue().toString());
+        double total_parcela = controladora.calculaValorParcela(parcelas);
+        jLabelValorParcelaCredito.setText("R$ %.2f".formatted(total_parcela));
+    }//GEN-LAST:event_jSpinnerCreditoStateChanged
+
+    private void jButtonConfirmarVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonConfirmarVendaMouseClicked
+        try{
+            String data_hora = getTimerDataHora();
+            controladora.finalizarVenda(data_hora);
+            JOptionPane.showConfirmDialog(null, "Venda finalizada com sucesso!", "Concluir Operação", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            troca_tela(jPanelInicial);
+        }catch (Exception e){
+            JOptionPane.showConfirmDialog(null, "Erro no acesso ao banco de dados. Tente Novamente!", "Erro de Conexão", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonConfirmarVendaMouseClicked
+
+    public String getTimerDataHora(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String date = simpleDateFormat.format(new Date());
+        String result ="%s %s".formatted(date, jLabelHoraVenda.getText()); 
+        return  result;
+    }
     
+    public void atualiza_valores_venda(){
+        jLabelQtdeItensCompra.setText("%03d".formatted(controladora.getVenda().getQtde_produtos()));
+        jLabelSubtotalCompra.setText("R$ %.2f".formatted(controladora.getVenda().getSubtotal()));
+        jLabelDesconto.setText("R$ %.2f".formatted(controladora.getVenda().getDesconto()));
+        jLabelTotal.setText("R$ %.2f".formatted(controladora.getVenda().getTotal()));
+        jLabelTotalPgto.setText("R$ %.2f".formatted(controladora.getVenda().getTotal()));
+
+    }
+    
+    public void remove_item_tabela(JTable tabela, int produto){
+       DefaultTableModel model = (DefaultTableModel) jTableProdutosVenda.getModel();
+       model.removeRow(produto);
+    }
+      
     // coloca as informações do itemVenda extraido na tabela de selecionados
     public void associa_item_venda(ItemVenda iv){
         DefaultTableModel model = (DefaultTableModel) jTableProdutosVenda.getModel();
@@ -1419,13 +1598,11 @@ public class InterfaceNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
@@ -1453,7 +1630,6 @@ public class InterfaceNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDataOrca;
     private javax.swing.JLabel jLabelDataVenda;
     private javax.swing.JLabel jLabelDesconto;
-    private javax.swing.JLabel jLabelDescontoOrca;
     private javax.swing.JLabel jLabelHoraInicial;
     private javax.swing.JLabel jLabelHoraMenuVenda;
     private javax.swing.JLabel jLabelHoraOrca;
@@ -1466,7 +1642,6 @@ public class InterfaceNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelInfoVendedorOrca;
     private javax.swing.JLabel jLabelItensOrca;
     private javax.swing.JLabel jLabelItensVenda;
-    private javax.swing.JLabel jLabelNomePix;
     private javax.swing.JLabel jLabelNumOrc;
     private javax.swing.JLabel jLabelNumOrca;
     private javax.swing.JLabel jLabelNumVenda;
@@ -1515,6 +1690,7 @@ public class InterfaceNew extends javax.swing.JFrame {
     private javax.swing.JTable jTableProdutosVenda;
     private javax.swing.JTextField jTextFieldCPFCliente;
     private javax.swing.JTextField jTextFieldCPFClienteOrca;
+    private javax.swing.JTextField jTextFieldChavePix;
     private javax.swing.JTextField jTextFieldNumOrc;
     private javax.swing.JLabel jTextFieldNumOrca;
     private javax.swing.JLabel jTextFieldNumVenda;
