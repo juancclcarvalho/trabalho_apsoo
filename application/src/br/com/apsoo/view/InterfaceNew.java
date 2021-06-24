@@ -1377,13 +1377,20 @@ public class InterfaceNew extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelarSelecaoMouseClicked
 
     private void jButtonFinalizarSelecaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarSelecaoMouseClicked
-        jRadioButtonDIN.setSelected(true);
-        jTextFieldChavePix.setEnabled(false);
-        jSpinnerCredito.setEnabled(false);
-        jSpinnerDebito.setEnabled(false);
-        jTextFieldPagamentoDinheiro.setEnabled(true);
-        controladora.setFormaPagamento("DINHEIRO");
-        troca_tela(jPanelPagamento);
+        
+        if(!jTextFieldCPFCliente.getText().equals("") && !(jTableProdutosVenda.getModel().getRowCount() == 0)){
+            jRadioButtonDIN.setSelected(true);
+            jTextFieldChavePix.setEnabled(false);
+            jSpinnerCredito.setEnabled(false);
+            jSpinnerDebito.setEnabled(false);
+            jTextFieldPagamentoDinheiro.setEnabled(true);
+            controladora.setFormaPagamento("DINHEIRO");
+            troca_tela(jPanelPagamento);
+        }else{
+            JOptionPane.showConfirmDialog(null, "Preencha o CPF do Cliente e Escolha ao Menos UM Produto!", "Finalizar Seleção", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);            
+        }
+        
+        
     }//GEN-LAST:event_jButtonFinalizarSelecaoMouseClicked
 
     private void jRadioButtonDINMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButtonDINMouseClicked
