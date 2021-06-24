@@ -1060,6 +1060,11 @@ public class InterfaceNew extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldChavePix.setText("vendas&pagamentos@todoeletronicos.com");
+        jTextFieldChavePix.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextFieldChavePix.setEnabled(false);
+        jTextFieldChavePix.setFocusable(false);
+
         javax.swing.GroupLayout jPanelPagamentoLayout = new javax.swing.GroupLayout(jPanelPagamento);
         jPanelPagamento.setLayout(jPanelPagamentoLayout);
         jPanelPagamentoLayout.setHorizontalGroup(

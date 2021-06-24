@@ -7,7 +7,7 @@ INSERT INTO public."tb_funcao"(fu_nome)	VALUES ('Estoquista');
 
 INSERT INTO public."tb_funcionario"(
 	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
-	VALUES ('145.568.198-12', 'Rua UFMS Cidade Universitária', 'Juan Carvalho', '(67)94002-8922', 'juanccl@todoeletronicos.com', 1, '87123', 0);
+	VALUES ('145.568.198-12', 'Juan Carvalho', 'Rua UFMS Cidade Universitária', '(67)94002-8922', 'juanccl@todoeletronicos.com', 1, '87123', 0);
 INSERT INTO public."tb_funcionario"(
 	func_cpf, func_nome, func_endereco, func_telefone, func_email, fu_id, func_cod_acesso, func_total_vendas)
 	VALUES ('813.123.871-98', 'Leonardo Esperança', 'Rua Portugal 123 - Jd Europa', '(67)97667-9812', 'leonardoesp@todoeletronicos.com', 2, '98134', 0);
@@ -102,26 +102,25 @@ INSERT INTO public."tb_produto"(
 	VALUES ('B089NS9JW2', 'Mi Band', 'Preto', 198.50, 'Xiaomi Mi Band 5 - Versão Global', 80, 6);
 
 
-------- ZERAR O BANCO
-
-DELETE FROM public."tb_funcionario";
-ALTER SEQUENCE "tb_funcionario_func_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_funcao";
-ALTER SEQUENCE "tb_funcao_fu_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_cliente";
-ALTER SEQUENCE "tb_cliente_cli_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_produto";
-ALTER SEQUENCE "tb_produto_prod_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_marca";
-ALTER SEQUENCE "tb_marca_marca_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_orcamento";
-ALTER SEQUENCE "tb_orcamento_orc_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_orcamento_produto";
-ALTER SEQUENCE "tb_orcamento_produto_op_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_venda";
-ALTER SEQUENCE "tb_venda_ven_id_seq" RESTART WITH 1;
-DELETE FROM public."tb_venda_produto";
-ALTER SEQUENCE "tb_venda_produto_vp_id_seq" RESTART WITH 1;
+  ------- ZERAR O BANCO
+  DELETE FROM public."tb_venda_produto";
+  ALTER SEQUENCE "tb_venda_produto_vp_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_orcamento_produto";
+  ALTER SEQUENCE "tb_orcamento_produto_op_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_orcamento";
+  ALTER SEQUENCE "tb_orcamento_orc_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_venda";
+  ALTER SEQUENCE "tb_venda_ven_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_produto";
+  ALTER SEQUENCE "tb_produto_prod_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_marca";
+  ALTER SEQUENCE "tb_marca_marca_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_cliente";
+  ALTER SEQUENCE "tb_cliente_cli_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_funcionario";
+  ALTER SEQUENCE "tb_funcionario_func_id_seq" RESTART WITH 1;
+  DELETE FROM public."tb_funcao";
+  ALTER SEQUENCE "tb_funcao_fu_id_seq" RESTART WITH 1;
 
 
 ------- CONTAR OS REGISTROS
@@ -145,4 +144,3 @@ DROP TABLE tb_funcionario;
 DROP TABLE tb_funcao;
 DROP TABLE tb_venda;
 DROP TABLE tb_venda_produto;
-
