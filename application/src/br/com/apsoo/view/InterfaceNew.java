@@ -371,7 +371,7 @@ public class InterfaceNew extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableProdutosVenda);
 
-        jButtonAddItem.setText("Adcionar Item");
+        jButtonAddItem.setText("Adicionar Item");
         jButtonAddItem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButtonAddItemMouseClicked(evt);
@@ -1262,6 +1262,8 @@ public class InterfaceNew extends javax.swing.JFrame {
                 seta_cliente_venda(cli);
             }
             catch (Exception e){
+                jTextFieldCPFCliente.setText("");
+                jLabelInfoCliente.setText("CLIENTE NÃO INFORMADO");
                 JOptionPane.showConfirmDialog(null, "Cliente não encontrado! Tente Novamente.", "Buscar Cliente", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             }            
         }
@@ -1313,19 +1315,32 @@ public class InterfaceNew extends javax.swing.JFrame {
     // apos um produto selecionado, associa ele à venda com um novo itemVenda 
     // e mostra o produto selecionado na tabela de itens da compra
     private void jButtonConfirmarItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonConfirmarItemMouseClicked
-        if(controladora.getOperacao().equals("VENDA")){
-            ItemVenda iv = extrai_item_selecionado();
-            if(iv != null){
-                controladora.associa_item_venda(iv);
-                associa_item_venda(iv);
-                troca_tela(jPanelVenda);
-                
-                atualiza_valores_venda();            }
+        try{
+            if(controladora.getOperacao().equals("VENDA")){
+                if(checa_quantidade()){
+                    ItemVenda iv = extrai_item_selecionado();
+                    if(iv != null){
+                        controladora.associa_item_venda(iv);
+                        associa_item_venda(iv);
+                        troca_tela(jPanelVenda);
+
+                        atualiza_valores_venda();
+                    }
+                    else{
+                        //controladora.associa_item_orcamento();
+                        troca_tela(jPanelOrcamento);
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(null, "Quantidade Maior que o Estoque do Produto!", "Adicionar Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else{
+                //orcamento
+            }
         }
-        else{
-            //controladora.associa_item_orcamento();
-            troca_tela(jPanelOrcamento);
-        }
+        catch (Exception e){
+            JOptionPane.showConfirmDialog(null, "Selecione um Produto Antes de Confirmar!", "Adicionar Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);            
+        }   
     }//GEN-LAST:event_jButtonConfirmarItemMouseClicked
 
     // remove um item da lista de itens da venda
@@ -1542,6 +1557,15 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelTotalOrca.setText("R$ %.2f".formatted(controladora.getOrcamento().getSubtotal()));
     }
     
+
+    public boolean checa_quantidade(){
+        int estoque_produto = (int) jTableProdutosCatalogo.getModel().getValueAt(jTableProdutosCatalogo.getSelectedRow(), 4);
+        int quantidade_selecionada = (int) jSpinnerQtdProduto.getValue();
+        
+        
+        return (estoque_produto >= quantidade_selecionada);
+    }
+
     public void remove_item_tabela(JTable tabela, int produto){
        DefaultTableModel model = (DefaultTableModel) jTableProdutosVenda.getModel();
        model.removeRow(produto);
@@ -1612,6 +1636,14 @@ public class InterfaceNew extends javax.swing.JFrame {
         jTextFieldNumVenda.setText(v.getCodigo());
         jLabelInfoVendedor.setText(v.getFun().toString());
         jLabelInfoCodVendedor.setText(v.getFun().getCod_acesso());
+        jLabelInfoCliente.setText("CLIENTE NÃO INFORMADO");
+        jTextFieldCPFCliente.setText("");
+        jTextFieldNumOrc.setText("");
+        jLabelQtdeItensCompra.setText("000");
+        jLabelSubtotalCompra.setText("R$ 0,00");
+        jLabelDesconto.setText("R$ 0,00");
+        jLabelTotal.setText("R$ 0,00");
+        
     }
     
     public void seta_informacoes_orcamento(Orcamento o)

@@ -4,6 +4,7 @@ package br.com.apsoo.dto;
 import br.com.apsoo.dao.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -82,9 +83,27 @@ public class Controladora {
                 "ven_cod, ven_data_hora, ven_qtde_prod, ven_subtotal, ven_desconto, ven_total, ven_forma_pgto, cli_id, func_id, fu_id", 
                 venda.toString());
         
-        System.out.println("br.com.apsoo.dto.Controladora.finalizarVenda()");
+        String venda_id = "0";
+        try {
+            venda_id = buscaIdVenda(venda.getCodigo());
+        } catch (Exception e) {
+            System.out.println("ERRO AO PERSISTIR VENDA");
+        }
         
-        //escrever os itens na vendaProduto
+        venda.setId(Integer.valueOf(venda_id));
+        
+        Iterator<ItemVenda> it = venda.getItens_venda().iterator();
+        
+        while(it.hasNext()){
+            ItemVenda iv = it.next();
+            bd.insereTabela("tb_venda_produto", "vp_qtd_item, vp_total_item, prod_id, marca_id, ven_id", iv.toString() + ", " + venda.getId());
+            
+            int estoque_atualizado_int =(iv.getItem().getEstoque() - iv.getQtde_item());
+            String estoque_atualizado = String.valueOf(estoque_atualizado_int);
+            
+            bd.atualizaTabela("tb_produto", "prod_estoque", estoque_atualizado, "where prod_codigo = '%s'".formatted(iv.getItem().getCodigo()));
+        }
+        
         //atualizar a quantiddade do produto
         
         
@@ -120,6 +139,21 @@ public class Controladora {
         
     }
     
+    public String buscaIdVenda(String codigo_venda)  throws SQLException{
+        
+        try {
+            String[] res = bd.buscaTabela("ven_id", "tb_venda", "", "where ven_cod = '%s'".formatted(venda.getCodigo())).get(0).toString().split(",");
+        
+            if(res.length > 0){
+                return res[0];
+            }
+        
+        } catch (Exception e) {
+            throw e;
+        }
+        return null;
+    }
+
 
     public double calculaValorParcela(int parcelas){
         return venda.getTotal()/parcelas;

@@ -575,7 +575,7 @@
             </Container>
             <Component class="javax.swing.JButton" name="jButtonAddItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Adcionar Item"/>
+                <Property name="text" type="java.lang.String" value="Adicionar Item"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonAddItemMouseClicked"/>

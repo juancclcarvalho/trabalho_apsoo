@@ -36,6 +36,11 @@ public class ItemVenda {
         }
         else return false;
     }
+
+    @Override
+    public String toString() {
+        return getQtde_item() + ", " + getTotal_item() + ", " + getItem().getId() + ", " + getItem().getMarca().getId();
+    }
     
     
     
