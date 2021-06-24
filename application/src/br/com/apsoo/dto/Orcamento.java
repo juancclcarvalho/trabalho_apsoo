@@ -35,6 +35,10 @@ public class Orcamento {
         this._fun = _fun;
     }
 
+    Orcamento() {
+       
+    }
+
     public int getId() {return _id;}
     public void setId(int _id) {this._id = _id;}
 
@@ -58,4 +62,7 @@ public class Orcamento {
 
     public Funcionario getFun() {return _fun;}
     public void setFun(Funcionario _fun) {this._fun = _fun;}
+    
+    public List<ItemVenda> getItens_orcamento() {return _itens_orcamento;}
+    public void setItens_orcamento(List<ItemVenda> _itens_orcamento) {this._itens_orcamento = _itens_orcamento;}
 }

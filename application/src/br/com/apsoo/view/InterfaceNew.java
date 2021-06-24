@@ -241,6 +241,11 @@ public class InterfaceNew extends javax.swing.JFrame {
         });
 
         jButtonRealizarOrcamento.setText("ORÇAMENTO");
+        jButtonRealizarOrcamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRealizarOrcamentoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelMenuVendaLayout = new javax.swing.GroupLayout(jPanelMenuVenda);
         jPanelMenuVenda.setLayout(jPanelMenuVendaLayout);
@@ -588,6 +593,11 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelCPFClienteOrca.setText("CPF do Cliente:");
 
         jTextFieldCPFClienteOrca.setToolTipText("digite");
+        jTextFieldCPFClienteOrca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldCPFClienteOrcaKeyPressed(evt);
+            }
+        });
 
         jLabelInfoClienteOrca.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabelInfoClienteOrca.setText("CLIENTE NÃO INFORMADO");
@@ -634,8 +644,18 @@ public class InterfaceNew extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTableProdutosOrca);
 
         jButtonAddItemOrca.setText("Adcionar Item");
+        jButtonAddItemOrca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonAddItemOrcaMouseClicked(evt);
+            }
+        });
 
         jButtonRemItemOrca.setText("Remover Item");
+        jButtonRemItemOrca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonRemItemOrcaMouseClicked(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel10.setText("Itens");
@@ -656,8 +676,18 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelTotalOrca.setText("R$ 0,00");
 
         jButtonCancelarOrca.setText("CANCELAR");
+        jButtonCancelarOrca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCancelarOrcaMouseClicked(evt);
+            }
+        });
 
         jButtonFinalizarOrca.setText("FINALIZAR");
+        jButtonFinalizarOrca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonFinalizarOrcaMouseClicked(evt);
+            }
+        });
 
         jLabelValInfo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabelValInfo.setText("Validade do Orçamento");
@@ -1419,6 +1449,76 @@ public class InterfaceNew extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonConfirmarVendaMouseClicked
 
+    private void jButtonFinalizarOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarOrcaMouseClicked
+        
+    }//GEN-LAST:event_jButtonFinalizarOrcaMouseClicked
+
+    private void jButtonCancelarOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarOrcaMouseClicked
+        controladora.cancelarOrcamento();
+        JOptionPane.showConfirmDialog(null, "Orçamento cancelado com sucesso!", "Cancelar Operação", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        troca_tela(jPanelInicial);
+    }//GEN-LAST:event_jButtonCancelarOrcaMouseClicked
+
+    private void jButtonAddItemOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddItemOrcaMouseClicked
+        carrega_catalogo_produtos();
+        
+        troca_tela(jPanelSelecaoProduto);
+    }//GEN-LAST:event_jButtonAddItemOrcaMouseClicked
+
+    private void jButtonRemItemOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemItemOrcaMouseClicked
+           try{
+            if(controladora.getOperacao().equals("ORCAMENTO")){
+                
+                int remover = jTableProdutosOrca.getSelectedRow();
+                String cod_produto = jTableProdutosOrca.getModel().getValueAt(remover, 0).toString();
+                int quantidade = Integer.valueOf(jTableProdutosOrca.getModel().getValueAt(remover, 4).toString());
+                        
+                controladora.remove_item_orcamento(cod_produto, quantidade);
+                remove_item_tabela(jTableProdutosOrca, remover);
+                
+                atualiza_valores_orcamento();       
+            }
+            else{
+                //String cod_produto = jTableProdutosOrca.getModel().getValueAt(jTableProdutosOrca.getSelectedRow(), 0).toString();
+            }
+        
+        }
+        catch (Exception e){
+            JOptionPane.showConfirmDialog(null, "Selecione um Produto Antes de Remover!", "Remover Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);            
+        }
+    }//GEN-LAST:event_jButtonRemItemOrcaMouseClicked
+
+    private void jTextFieldCPFClienteOrcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCPFClienteOrcaKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            
+            String cpf = jTextFieldCPFClienteOrca.getText().toString();
+            
+            try{
+                Cliente cli = controladora.buscaCliente(cpf);
+                controladora.seta_clienteOrc(cli);
+                seta_cliente_orcamento(cli);
+            }
+            catch (Exception e){
+                JOptionPane.showConfirmDialog(null, "Cliente não encontrado! Tente Novamente.", "Buscar Cliente", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+            }            
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_DELETE){
+            jTextFieldCPFClienteOrca.setText("");
+        }
+       
+    }//GEN-LAST:event_jTextFieldCPFClienteOrcaKeyPressed
+
+    private void jButtonRealizarOrcamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRealizarOrcamentoMouseClicked
+        Orcamento o = controladora.iniciarOrcamento();
+
+        seta_informacoes_orcamento(o);
+        
+        DefaultTableModel model = (DefaultTableModel) jTableProdutosOrca.getModel();
+        model.setNumRows(0);
+        
+        troca_tela(jPanelOrcamento);        
+    }//GEN-LAST:event_jButtonRealizarOrcamentoMouseClicked
+
     public String getTimerDataHora(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -1434,6 +1534,12 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelTotal.setText("R$ %.2f".formatted(controladora.getVenda().getTotal()));
         jLabelTotalPgto.setText("R$ %.2f".formatted(controladora.getVenda().getTotal()));
 
+    }
+    
+    public void atualiza_valores_orcamento(){
+        jLabelQtdeItensCompraOrca.setText("%03d".formatted(controladora.getOrcamento().getQtde_produtos()));
+        jLabelSubtotalCompraOrca.setText("R$ %.2f".formatted(controladora.getOrcamento().getSubtotal()));
+        jLabelTotalOrca.setText("R$ %.2f".formatted(controladora.getOrcamento().getSubtotal()));
     }
     
     public void remove_item_tabela(JTable tabela, int produto){
@@ -1494,12 +1600,26 @@ public class InterfaceNew extends javax.swing.JFrame {
         jLabelInfoCliente.setText(c.getNome());
     }
     
+    public void seta_cliente_orcamento(Cliente c)
+    {   
+        //adciona o nome do cliente ao orcamento na tela de orcamento
+        jLabelInfoClienteOrca.setText(c.getNome());
+    }
+    
     public void seta_informacoes_venda(Venda v)
     {
         //adciona as informações da venda e do vendedor na tela da venda
         jTextFieldNumVenda.setText(v.getCodigo());
         jLabelInfoVendedor.setText(v.getFun().toString());
         jLabelInfoCodVendedor.setText(v.getFun().getCod_acesso());
+    }
+    
+    public void seta_informacoes_orcamento(Orcamento o)
+    {
+        //adciona as informações do orcmamento e do vendedor na tela do orcamento
+        jTextFieldNumOrca.setText(o.getCodigo());
+        jLabelInfoVendedorOrca.setText(o.getFun().toString());
+        jLabelInfoCodVendedorOrca.setText(o.getFun().getCod_acesso());
     }
             
     public void troca_tela(JPanel nova_tela){

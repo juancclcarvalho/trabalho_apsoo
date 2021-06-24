@@ -50,6 +50,10 @@ public class Controladora {
 
     public void setVenda(Venda venda) {this.venda = venda;}    
 
+    public Orcamento getOrcamento() {return orcamento;}
+
+    public void setOrcamento(Orcamento orcamento) {this.orcamento = orcamento;}
+    
     public Funcionario getFuncionario() {return funcionario;}
 
     public void setFuncionario(Funcionario funcionario) {this.funcionario = funcionario;}
@@ -85,6 +89,37 @@ public class Controladora {
         
         
     }
+    
+    public void finalizarOrcamento(String data_hora){
+        /*
+        venda.setData_hora(data_hora);
+        
+        int pontos = venda.getCli().getPontos();
+        int vendas = venda.getFun().getTotal_vendas();
+        venda.getCli().setPontos(pontos + 20);
+        venda.getFun().setTotal_vendas(vendas + 1);
+        String pontos_atualizado = String.valueOf(venda.getCli().getPontos());
+        String vendas_atualizado = String.valueOf(venda.getFun().getTotal_vendas());
+
+        
+        bd.atualizaTabela("tb_cliente", "cli_pontos_fidelidade", pontos_atualizado, "where cli_cpf = '%s'".formatted(venda.getCli().getCpf()));
+        bd.atualizaTabela("tb_funcionario", "func_total_vendas", vendas_atualizado, "where func_cpf = '%s' and func_cod_acesso = '%s'".formatted(venda.getFun().getCpf(), venda.getFun().getCod_acesso()));
+
+        System.out.println(venda.toString());
+        
+        bd.insereTabela(
+                "tb_venda", 
+                "ven_cod, ven_data_hora, ven_qtde_prod, ven_subtotal, ven_desconto, ven_total, ven_forma_pgto, cli_id, func_id, fu_id", 
+                venda.toString());
+        
+        System.out.println("br.com.apsoo.dto.Controladora.finalizarVenda()");
+        
+        //escrever os itens na vendaProduto
+        //atualizar a quantiddade do produto
+        */
+        
+    }
+    
 
     public double calculaValorParcela(int parcelas){
         return venda.getTotal()/parcelas;
@@ -108,6 +143,12 @@ public class Controladora {
         this.setOperacao(null);
     }
     
+    public void cancelarOrcamento(){
+        this.setOrcamento(null);
+        this.setFuncionario(null);
+        this.setOperacao(null);
+    }
+    
     //associa um item selecionado à venda
     public void associa_item_venda(ItemVenda iv){
         venda.getItens_venda().add(iv);
@@ -116,6 +157,17 @@ public class Controladora {
         
         System.out.println(venda.getItens_venda().size());
     }
+    
+    /*
+    //associa um item selecionado ao orcametno
+    public void associa_item_orcamento(ItemVenda io){
+        orcamento.getItens_orcamento().add(io);
+        orcamento.setQtde_produtos(orcamento.getQtde_produtos()+1);
+        calcula_valores_orcamento();
+        
+        System.out.println(orcamento.getItens_orcamento().size());
+    }
+    */
     
     //remove um item da venda
     public void remove_item_venda(String cod_produto, int quantidade){
@@ -128,6 +180,20 @@ public class Controladora {
         
         System.out.println(venda.getItens_venda().size());
     }
+    
+    
+    //remove um item do orcamento
+    public void remove_item_orcamento(String cod_produto, int quantidade){
+        ItemVenda iv_remover = new ItemVenda(new Produto(), quantidade, 0.0);
+        iv_remover.getItem().setCodigo(cod_produto);
+        
+        orcamento.getItens_orcamento().remove(iv_remover);
+        orcamento.setQtde_produtos(orcamento.getQtde_produtos()-1);
+        calcula_valores_orcamento();
+        
+        System.out.println(orcamento.getItens_orcamento().size());
+    }
+    
     
     public void calcula_valores_venda(){
         double subtotal = 0;
@@ -146,6 +212,15 @@ public class Controladora {
         venda.setSubtotal(subtotal);
         venda.setDesconto(desconto);
         venda.setTotal(subtotal-desconto);
+    }
+    
+    public void calcula_valores_orcamento(){
+        double subtotal = 0;
+        for(int i = 0; i < orcamento.getQtde_produtos(); i++){
+            subtotal = subtotal + orcamento.getItens_orcamento().get(i).getTotal_item();
+        }
+        
+        orcamento.setSubtotal(subtotal);
     }
     
     // busca todos os produtos na tb_produto e retorna uma lista com os resultados
@@ -167,6 +242,11 @@ public class Controladora {
     public void seta_cliente(Cliente cli){
         venda.setCli(cli);
     }
+    
+    // configura o cliente no orcamento
+    public void seta_clienteOrc(Cliente cli){
+        orcamento.setCli(cli);
+    }
       
     // inicia a venda, configurando o funcionario previamente liberado para
     // realizar a venda, o código da venda e a lista de itens, vazia
@@ -186,6 +266,26 @@ public class Controladora {
         venda.setItens_venda(itens);
         
         return venda;
+    }
+    
+    // inicia o orcamento, configurando o funcionario previamente liberado para
+    // realizar o orcamento, o código do orcamento e a lista de itens, vazia
+    public Orcamento iniciarOrcamento(){
+        operacao = "ORCAMENTO";
+        
+        orcamento = new Orcamento();
+        
+        Random rand = new Random();
+        Integer codigoOrcamento = rand.nextInt(9999999);
+        orcamento.setCodigo(codigoOrcamento.toString());
+        orcamento.setQtde_produtos(0);
+        orcamento.setFun(this.getFuncionario());
+        funcionario = null;
+        
+        List<ItemVenda> itens = new ArrayList<>();
+        orcamento.setItens_orcamento(itens);
+        
+        return orcamento;
     }
     
     //valida um funcionário com as informações presentes em banco

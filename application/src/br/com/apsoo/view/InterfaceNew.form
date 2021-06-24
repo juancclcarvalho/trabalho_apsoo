@@ -247,6 +247,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="OR&#xc7;AMENTO"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonRealizarOrcamentoMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -917,6 +920,9 @@
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value="digite"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldCPFClienteOrcaKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelInfoClienteOrca">
               <Properties>
@@ -963,11 +969,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Adcionar Item"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonAddItemOrcaMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonRemItemOrca">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Remover Item"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonRemItemOrcaMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -1021,11 +1033,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="CANCELAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonCancelarOrcaMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonFinalizarOrca">
               <Properties>
                 <Property name="text" type="java.lang.String" value="FINALIZAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonFinalizarOrcaMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelValInfo">
               <Properties>
