@@ -21,5 +21,10 @@ public class ItemOrcamento {
 
     public double getTotal_item() {return _total_item;}
     public void setTotal_item(double _total_item) {this._total_item = _total_item;}
+
     
+    @Override
+    public String toString() {
+        return getQtde_item() + ", " + getTotal_item() + ", " + getItem().getId() + ", " + getItem().getMarca().getId();
+    }
 }

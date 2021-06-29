@@ -11,7 +11,7 @@ public class Orcamento {
     private double _subtotal;
     private Cliente _cli;
     private Funcionario _fun;
-    private List<ItemVenda> _itens_orcamento;
+    private List<ItemOrcamento> _itens_orcamento;
 
     public Orcamento(String _codigo, String data_hora, String data_validade, int _qtde_produtos, double _subtotal, Cliente _cli, Funcionario _fun) {
         this._id = -1;
@@ -63,6 +63,12 @@ public class Orcamento {
     public Funcionario getFun() {return _fun;}
     public void setFun(Funcionario _fun) {this._fun = _fun;}
     
-    public List<ItemVenda> getItens_orcamento() {return _itens_orcamento;}
-    public void setItens_orcamento(List<ItemVenda> _itens_orcamento) {this._itens_orcamento = _itens_orcamento;}
+    public List<ItemOrcamento> getItens_orcamento() {return _itens_orcamento;}
+    public void setItens_orcamento(List<ItemOrcamento> _itens_orcamento) {this._itens_orcamento = _itens_orcamento;}
+    
+    @Override
+    public String toString() {
+        return getCodigo() + ", " + getQtde_produtos() + ", '" + getData_hora() + "', '" + getData_validade()+ "', "  +
+               getSubtotal() + ", " + getCli().getId() + ", " + getFun().getId() + ", " + getFun().getFuncao().getId();
+    }
 }

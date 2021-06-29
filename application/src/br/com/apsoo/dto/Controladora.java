@@ -3,7 +3,11 @@ package br.com.apsoo.dto;
 
 import br.com.apsoo.dao.Database;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -85,7 +89,7 @@ public class Controladora {
         
         String venda_id = "0";
         try {
-            venda_id = buscaIdVenda(venda.getCodigo());
+            venda_id = buscaIdVenda();
         } catch (Exception e) {
             System.out.println("ERRO AO PERSISTIR VENDA");
         }
@@ -104,42 +108,65 @@ public class Controladora {
             bd.atualizaTabela("tb_produto", "prod_estoque", estoque_atualizado, "where prod_codigo = '%s'".formatted(iv.getItem().getCodigo()));
         }
         
-        //atualizar a quantiddade do produto
         
         
     }
     
     public void finalizarOrcamento(String data_hora){
-        /*
-        venda.setData_hora(data_hora);
         
-        int pontos = venda.getCli().getPontos();
-        int vendas = venda.getFun().getTotal_vendas();
-        venda.getCli().setPontos(pontos + 20);
-        venda.getFun().setTotal_vendas(vendas + 1);
-        String pontos_atualizado = String.valueOf(venda.getCli().getPontos());
-        String vendas_atualizado = String.valueOf(venda.getFun().getTotal_vendas());
-
+        orcamento.setData_hora(data_hora);
         
-        bd.atualizaTabela("tb_cliente", "cli_pontos_fidelidade", pontos_atualizado, "where cli_cpf = '%s'".formatted(venda.getCli().getCpf()));
-        bd.atualizaTabela("tb_funcionario", "func_total_vendas", vendas_atualizado, "where func_cpf = '%s' and func_cod_acesso = '%s'".formatted(venda.getFun().getCpf(), venda.getFun().getCod_acesso()));
-
-        System.out.println(venda.toString());
+        Date data_atual = new Date();
+        LocalDateTime ldt = data_atual.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(2);
+        Date data_validade = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+        
+        orcamento.setData_validade(new SimpleDateFormat("yyyy-MM-dd").format(data_validade));
         
         bd.insereTabela(
-                "tb_venda", 
-                "ven_cod, ven_data_hora, ven_qtde_prod, ven_subtotal, ven_desconto, ven_total, ven_forma_pgto, cli_id, func_id, fu_id", 
-                venda.toString());
+                "tb_orcamento", 
+                "orc_codigo, orc_qtde_prod, orc_data_hora, orc_data_validade, orc_subtotal, cli_id, func_id, fu_id", 
+                orcamento.toString());
         
-        System.out.println("br.com.apsoo.dto.Controladora.finalizarVenda()");
+        String orcamento_id = "0";
+        try {
+            orcamento_id = buscaIdOrcamento();
+        } catch (Exception e) {
+            System.out.println("ERRO AO PERSISTIR ORCAMENTO");
+        }
         
-        //escrever os itens na vendaProduto
-        //atualizar a quantiddade do produto
-        */
+        orcamento.setId(Integer.valueOf(orcamento_id));
         
+        Iterator<ItemOrcamento> it = orcamento.getItens_orcamento().iterator();
+        
+        while(it.hasNext()){
+            ItemOrcamento io = it.next();
+            bd.insereTabela(
+                    "tb_orcamento_produto", 
+                    "op_qdt_item, op_total_item, prod_id, marca_id, orc_id", 
+                    io.toString() + ", " + orcamento.getId());
+        }
+        
+        
+        System.out.println(orcamento.toString());
+
     }
     
-    public String buscaIdVenda(String codigo_venda)  throws SQLException{
+    public String buscaIdOrcamento()  throws SQLException{
+        
+        try {
+            String[] res = bd.buscaTabela("orc_id", "tb_orcamento", "", "where orc_codigo = '%s'".formatted(orcamento.getCodigo())).get(0).toString().split(",");
+        
+            if(res.length > 0){
+                return res[0];
+            }
+        
+        } catch (Exception e) {
+            throw e;
+        }
+        return null;
+    }
+    
+    public String buscaIdVenda()  throws SQLException{
         
         try {
             String[] res = bd.buscaTabela("ven_id", "tb_venda", "", "where ven_cod = '%s'".formatted(venda.getCodigo())).get(0).toString().split(",");
@@ -192,16 +219,16 @@ public class Controladora {
         System.out.println(venda.getItens_venda().size());
     }
     
-    /*
+    
     //associa um item selecionado ao orcametno
-    public void associa_item_orcamento(ItemVenda io){
+    public void associa_item_orcamento(ItemOrcamento io){
         orcamento.getItens_orcamento().add(io);
         orcamento.setQtde_produtos(orcamento.getQtde_produtos()+1);
         calcula_valores_orcamento();
         
         System.out.println(orcamento.getItens_orcamento().size());
     }
-    */
+    
     
     //remove um item da venda
     public void remove_item_venda(String cod_produto, int quantidade){
@@ -218,7 +245,7 @@ public class Controladora {
     
     //remove um item do orcamento
     public void remove_item_orcamento(String cod_produto, int quantidade){
-        ItemVenda iv_remover = new ItemVenda(new Produto(), quantidade, 0.0);
+        ItemOrcamento iv_remover = new ItemOrcamento(new Produto(), quantidade, 0.0);
         iv_remover.getItem().setCodigo(cod_produto);
         
         orcamento.getItens_orcamento().remove(iv_remover);
@@ -316,7 +343,7 @@ public class Controladora {
         orcamento.setFun(this.getFuncionario());
         funcionario = null;
         
-        List<ItemVenda> itens = new ArrayList<>();
+        List<ItemOrcamento> itens = new ArrayList<>();
         orcamento.setItens_orcamento(itens);
         
         return orcamento;

@@ -7,6 +7,7 @@ package br.com.apsoo.view;
 
 import br.com.apsoo.dto.Cliente;
 import br.com.apsoo.dto.Controladora;
+import br.com.apsoo.dto.ItemOrcamento;
 import br.com.apsoo.dto.ItemVenda;
 import br.com.apsoo.dto.Orcamento;
 import br.com.apsoo.dto.Produto;
@@ -653,7 +654,7 @@ public class InterfaceNew extends javax.swing.JFrame {
         jButtonRemItemOrca.setText("Remover Item");
         jButtonRemItemOrca.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButtonRemItemOrcaMouseClicked(evt);
+                jButtonRemItemMouseClicked(evt);
             }
         });
 
@@ -1301,7 +1302,6 @@ public class InterfaceNew extends javax.swing.JFrame {
 
     // abre a tela de selecao de produtos
     private void jButtonAddItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddItemMouseClicked
-        
         carrega_catalogo_produtos();
         
         troca_tela(jPanelSelecaoProduto);
@@ -1331,16 +1331,24 @@ public class InterfaceNew extends javax.swing.JFrame {
 
                         atualiza_valores_venda();
                     }
-                    else{
-                        //controladora.associa_item_orcamento();
-                        troca_tela(jPanelOrcamento);
-                    }
                 }else{
                     JOptionPane.showConfirmDialog(null, "Quantidade Maior que o Estoque do Produto!", "Adicionar Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                 }
             }
-            else{
-                //orcamento
+            else{ //orcamento
+                if(checa_quantidade()){
+                    ItemVenda iv = extrai_item_selecionado();
+                    ItemOrcamento io = new ItemOrcamento(iv.getItem(), iv.getQtde_item(), iv.getTotal_item());
+                    if(iv != null){
+                        controladora.associa_item_orcamento(io);
+                        associa_item_orcamento(io);
+                        troca_tela(jPanelOrcamento);
+
+                        atualiza_valores_orcamento();
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(null, "Quantidade Maior que o Estoque do Produto!", "Adicionar Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         catch (Exception e){
@@ -1357,12 +1365,19 @@ public class InterfaceNew extends javax.swing.JFrame {
                 int quantidade = Integer.valueOf(jTableProdutosVenda.getModel().getValueAt(remover, 4).toString());
                         
                 controladora.remove_item_venda(cod_produto, quantidade);
-                remove_item_tabela(jTableProdutosVenda, remover);
+                remove_item_tabela(jTableProdutosVenda, remover, "V");
                 
                 atualiza_valores_venda();       
             }
             else{
-                //String cod_produto = jTableProdutosOrca.getModel().getValueAt(jTableProdutosOrca.getSelectedRow(), 0).toString();
+                int remover = jTableProdutosOrca.getSelectedRow();
+                String cod_produto = jTableProdutosOrca.getModel().getValueAt(remover, 0).toString();
+                int quantidade = Integer.valueOf(jTableProdutosOrca.getModel().getValueAt(remover, 4).toString());
+                        
+                controladora.remove_item_orcamento(cod_produto, quantidade);
+                remove_item_tabela(jTableProdutosOrca, remover, "O");
+                
+                atualiza_valores_orcamento();
             }
         }
         catch (Exception e){
@@ -1477,7 +1492,20 @@ public class InterfaceNew extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonConfirmarVendaMouseClicked
 
     private void jButtonFinalizarOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarOrcaMouseClicked
-        
+        try{
+            String data_hora = getTimerDataHora();
+            controladora.finalizarOrcamento(data_hora);
+            
+            JOptionPane.showConfirmDialog(
+                    null, 
+                    "Orçamento Nº %s Concluído com sucesso!".formatted(controladora.getOrcamento().getCodigo()), 
+                    "Concluir Operação", 
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            
+            troca_tela(jPanelInicial);
+        }catch (Exception e){
+            JOptionPane.showConfirmDialog(null, "Erro no acesso ao banco de dados. Tente Novamente!", "Erro de Conexão", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonFinalizarOrcaMouseClicked
 
     private void jButtonCancelarOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarOrcaMouseClicked
@@ -1491,29 +1519,6 @@ public class InterfaceNew extends javax.swing.JFrame {
         
         troca_tela(jPanelSelecaoProduto);
     }//GEN-LAST:event_jButtonAddItemOrcaMouseClicked
-
-    private void jButtonRemItemOrcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRemItemOrcaMouseClicked
-           try{
-            if(controladora.getOperacao().equals("ORCAMENTO")){
-                
-                int remover = jTableProdutosOrca.getSelectedRow();
-                String cod_produto = jTableProdutosOrca.getModel().getValueAt(remover, 0).toString();
-                int quantidade = Integer.valueOf(jTableProdutosOrca.getModel().getValueAt(remover, 4).toString());
-                        
-                controladora.remove_item_orcamento(cod_produto, quantidade);
-                remove_item_tabela(jTableProdutosOrca, remover);
-                
-                atualiza_valores_orcamento();       
-            }
-            else{
-                //String cod_produto = jTableProdutosOrca.getModel().getValueAt(jTableProdutosOrca.getSelectedRow(), 0).toString();
-            }
-        
-        }
-        catch (Exception e){
-            JOptionPane.showConfirmDialog(null, "Selecione um Produto Antes de Remover!", "Remover Produto", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);            
-        }
-    }//GEN-LAST:event_jButtonRemItemOrcaMouseClicked
 
     private void jTextFieldCPFClienteOrcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCPFClienteOrcaKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
@@ -1578,9 +1583,16 @@ public class InterfaceNew extends javax.swing.JFrame {
         return (estoque_produto >= quantidade_selecionada);
     }
 
-    public void remove_item_tabela(JTable tabela, int produto){
-       DefaultTableModel model = (DefaultTableModel) jTableProdutosVenda.getModel();
-       model.removeRow(produto);
+    public void remove_item_tabela(JTable tabela, int produto, String operacao){
+        DefaultTableModel model;
+        if(operacao.equals("V")){
+           model = (DefaultTableModel) jTableProdutosVenda.getModel();
+        } 
+        else{
+            model = (DefaultTableModel) jTableProdutosOrca.getModel();
+        }
+        model.removeRow(produto);
+
     }
       
     // coloca as informações do itemVenda extraido na tabela de selecionados
@@ -1588,6 +1600,13 @@ public class InterfaceNew extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableProdutosVenda.getModel();
         model.addRow(new Object[]{  iv.getItem().getCodigo(), iv.getItem().getDescricao(), iv.getItem().getMarca().getNome(), 
                                     iv.getItem().getPreco(), iv.getQtde_item(), iv.getTotal_item()});
+    }
+    
+    // coloca as informações do itemVenda extraido na tabela de selecionados
+    public void associa_item_orcamento(ItemOrcamento io){
+        DefaultTableModel model = (DefaultTableModel) jTableProdutosOrca.getModel();
+        model.addRow(new Object[]{  io.getItem().getCodigo(), io.getItem().getDescricao(), io.getItem().getMarca().getNome(), 
+                                    io.getItem().getPreco(), io.getQtde_item(), io.getTotal_item()});
     }
     
     // extrai informações do item selecioado pelo usuario na selecao de itens
@@ -1660,10 +1679,15 @@ public class InterfaceNew extends javax.swing.JFrame {
     
     public void seta_informacoes_orcamento(Orcamento o)
     {
-        //adciona as informações do orcmamento e do vendedor na tela do orcamento
+        //adciona as informações do orcamento e do vendedor na tela do orcamento
         jTextFieldNumOrca.setText(o.getCodigo());
         jLabelInfoVendedorOrca.setText(o.getFun().toString());
         jLabelInfoCodVendedorOrca.setText(o.getFun().getCod_acesso());
+        jLabelInfoClienteOrca.setText("CLIENTE NÃO INFORMADO");
+        jTextFieldCPFClienteOrca.setText("");
+        jLabelQtdeItensCompraOrca.setText("000");
+        jLabelSubtotalCompraOrca.setText("R$ 0,00");
+        jLabelTotalOrca.setText("R$ 0,00");
     }
             
     public void troca_tela(JPanel nova_tela){
